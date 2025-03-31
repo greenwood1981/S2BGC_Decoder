@@ -6,8 +6,15 @@
 !src/**/.h
 !.gitignore
 !Readme.md
+!IDG_S2BGC_Iridium_format.pdf
+!config/config.json
+!config/diagnostic.json
+!config/Engineering_Data.json
+!config/meta_default.json
+!config/mission.json
 
 # List files to include
 !makefile
 
 !*/
+
