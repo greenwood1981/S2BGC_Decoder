@@ -6,7 +6,7 @@
 !src/**/.h
 !.gitignore
 !Readme.md
-!IDG_S2BGC_Iridium_format.pdf
+#!IDG_S2BGC_Iridium_format.pdf
 !config/config.json
 !config/diagnostic.json
 !config/Engineering_Data.json

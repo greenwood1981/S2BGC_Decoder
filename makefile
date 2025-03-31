@@ -6,18 +6,10 @@ OFILES=$(shell find $(OBJ) -name "*.o")
 BGC_Decoder: src/.objectfiles/.empty src/.objectfiles/main.o src/.objectfiles/write_json.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o
 	g++ -g -std=c++20 $(OFILES) -o BGC_Decoder
 
+# Creates necessary directory structure
 src/.objectfiles/.empty:
 	mkdir -p src/.objectfiles log data incoming
 	touch src/.objectfiles/.empty
-
-#	mkdir -p src/.objectfiles
-#	mkdir -p log
-#	mkdir -p data
-#	mkdir -p incoming
-#	if [ ! -d src/.objectfiles ]; then mkdir -p src/.objectfiles; fi
-#	if [ ! -d log ]; then mkdir -p log; fi
-#	if [ ! -d data ]; then mkdir -p data; fi
-#	if [ ! -d incoming ]; then mkdir -p incoming; fi
 
 $(OBJ)/main.o: src/main.cpp src/output/write_log.h src/.objectfiles/hexfile.o src/.objectfiles/log.o
 	g++ -g -std=c++20 -c src/main.cpp -lboost_filesystem -o $@

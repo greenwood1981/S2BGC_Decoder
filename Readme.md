@@ -1,16 +1,28 @@
 <h2>S2BGC Decoder</h2>
+<p>S2BGC Decoder is a free and open-source decoder (GPL-3.0) to convert raw S2BGC telemetry into human readable .json files</p>
 
 <h3>Installation</h3>
+<p>To install, clone this repo, and run make</p>
 
 <h3>Operation</h3>
-<p>S2BGC_Decoder can be automated using a cronjob or manually run by a user from the command line. The <b>S2BGC_PATH</b> environmental variable must be defined prior to running the decoder.</p>
-<h4>Cronjob Example</h4>
+<p>S2BGC_Decoder can be automated using a cronjob or run manually by a user from the command line.</p>
+
+<h3>Requirements</h3>
+<ul>
+
+<li>Tested on a Linux computer running Ubuntu 24.04 and compiled with GNU g++ v11.4</li>
+<li>The <b>S2BGC_PATH</b> environmental variable must be defined prior to running the decoder.</li>
+</ul>
+
+<h3>Cronjob Example</h3>
 <pre>
-S2BGC_PATH="/data1/BGC-SOLO"
+S2BGC_PATH="/path/BGC-SOLO"
 #  min hr dom mon dow command
   */15  *   *   *   * /path/BGC_Decoder 2>&1
 </pre>
 
+<h3>Code summary</h3>
+<p>
 
 <h3>Packet types</h3>
 <table>
