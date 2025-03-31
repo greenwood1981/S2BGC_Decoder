@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "INTERNAL ID NUMBER":9041,
+    "WMO_ID NUMBER":9999999,
+    "TRANSMISSION ID NUMBER":4008,
+    "INSTRUMENT TYPE":"SOLO_BGC_MRV",
+    "WMO INSTRUMENT TYPE (TABLE 1770)":886,
+    "WMO RECORDER TYPE (TABLE 4770)":64,
+    "POSITIONING SYSTEM":"GPS",
+    "PI":"NICHOLSON, WIJFFELS",
+    "OPERATING_INSTITUTION":"WHOI, Woods Hole, MA",
+    "PROJECT_NAME": "GO-BGC, WHOI"
+  },
+  "sensors": [
+    {"make":"SATLANTIC","model":"SUNA_V2","SN":"1","description":"SPECTROPHOTOMETER_NITRATE","accuracy":"n/a","resolution":"n/a","parameters":["NITRATE"]},
+    {"make":"SBE","model":"SEAFET","SN":"1"},
+    {"make":"SBE","model":"SBE63_OPTODE","SN":"1"},
+    {"make":"SBE","model":"SBE41CP_V3.0c","SN":"1"},
+    {"make":"DRUCK","model":"DRUCK_2900PSIA","SN":"1"},
+    {"make":"WETLABS","model":"MCOMS_FLBBCD","SN":"1"}
+  ]
+}

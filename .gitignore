@@ -1,0 +1,13 @@
+# First, ignore everything
+*
+
+# List directories to include
+!src/**/.cpp
+!src/**/.h
+!.gitignore
+!Readme.md
+
+# List files to include
+!makefile
+
+!*/
