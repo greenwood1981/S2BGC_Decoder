@@ -5,6 +5,7 @@
 !src/**/.cpp
 !src/**/.h
 !.gitignore
+!LICENSE.txt
 !Readme.md
 #!IDG_S2BGC_Iridium_format.pdf
 !config/config.json
@@ -12,7 +13,7 @@
 !config/Engineering_Data.json
 !config/meta_default.json
 !config/mission.json
-
+!example/4008_018.json
 # List files to include
 !makefile
 

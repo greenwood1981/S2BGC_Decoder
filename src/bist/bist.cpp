@@ -31,7 +31,7 @@ void ctd_bist::parse(std::vector<uint8_t> d) {
   for (int p = 0; p < 12; p++) {
     flag = std::pow(2,p);
     if (status & flag) {
-      log( std::format( " -- %s", CTD_Status_Flag[p]) );
+      log( std::format( " -- {}", CTD_Status_Flag[p]) );
       //std::cout << " -- " << CTD_Status_Flag[p] << std::endl;;
     }
   }
@@ -61,7 +61,7 @@ void do_bist::parse(std::vector<uint8_t> d) {
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (status & flag) {
-      log( std::format( " -- %s", DO_Status_Flag[p]) );
+      log( std::format( " -- {}", DO_Status_Flag[p]) );
       //std::cout << " -- " << DO_Status_Flag[p] << std::endl;;
     }
   }
@@ -92,7 +92,7 @@ void ph_bist::parse(std::vector<uint8_t> d) {
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (status & flag) {
-      log( std::format( " -- %s", pH_Status_Flag[p]) );
+      log( std::format( " -- {}", pH_Status_Flag[p]) );
       //std::cout << " -- " << pH_Status_Flag[p] << std::endl;;
     }
   }
@@ -123,7 +123,7 @@ void eco_bist::parse(std::vector<uint8_t> d) {
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (status & flag) {
-      log( std::format( " -- %s", eco_Status_Flag[p]) );
+      log( std::format( " -- {}", eco_Status_Flag[p]) );
       //std::cout << " -- " << eco_Status_Flag[p] << std::endl;;
     }
   }
@@ -153,7 +153,7 @@ void ocr_bist::parse(std::vector<uint8_t> d) {
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (status & flag) {
-      log( std::format( " -- %s", ocr_Status_Flag[p]) );
+      log( std::format( " -- {}", ocr_Status_Flag[p]) );
       //std::cout << " -- " << ocr_Status_Flag[p] << std::endl;;
     }
   }
@@ -191,7 +191,7 @@ void no3_bist::parse_engineer(std::vector<uint8_t> d) {
   for (int p = 0; p < 13; p++) {
     flag = std::pow(2,p);
     if (status & flag) {
-      log( std::format( " -- %s", NO3_Status_Flag[p]) );
+      log( std::format( " -- {}", NO3_Status_Flag[p]) );
       //std::cout << " -- " << NO3_Status_Flag[p] << std::endl;;
     }
   }

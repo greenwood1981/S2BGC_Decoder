@@ -9,9 +9,10 @@
 
 <h3>Requirements</h3>
 <ul>
-
-<li>Tested on a Linux computer running Ubuntu 24.04 and compiled with GNU g++ v11.4</li>
-<li>The <b>S2BGC_PATH</b> environmental variable must be defined prior to running the decoder.</li>
+  <li>A Linux operating system is recommended</li>
+  <li>Compile with GNU g++ v11.4 or newer</li>
+  <li>The <b>S2BGC_PATH</b> environmental variable must be defined prior to running the decoder.</li>
+  <li>Modify config/meta_default.json to match your institution's information</li>
 </ul>
 
 <h3>Cronjob Example</h3>
@@ -22,7 +23,9 @@ S2BGC_PATH="/path/BGC-SOLO"
 </pre>
 
 <h3>Code summary</h3>
-<p>
+
+<h3>JSON output</h3>
+<p>A sample .json file is provided. See <a href="https://github.com/greenwood1981/S2BGC_Decoder/blob/master/example/4008_018.json">4008_018.json</a></p>
 
 <h3>Packet types</h3>
 <table>

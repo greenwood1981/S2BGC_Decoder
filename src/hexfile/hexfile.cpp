@@ -160,7 +160,7 @@ void hexfile::Decode() {
 					}
 					log(std::string("Packet[ 1] Upload command: ") + upload_command);
                 }
-				if (p.header.data_ID == 3)
+				else if (p.header.data_ID == 3)
 					miss.parse(p.data);
 				else if (p.header.data_ID == 4)
 					log("Packet[ 1] SCI parameter array; parsing not implemented");
