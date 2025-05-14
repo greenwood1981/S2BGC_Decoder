@@ -17,5 +17,6 @@
 # List files to include
 !makefile
 !version_increment.cpp
+!src/version.h
 !*/
 

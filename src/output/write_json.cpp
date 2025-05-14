@@ -137,11 +137,19 @@ void hexfile::write_JSON() {
   fout << "  \"DECODER_VERSION\": " << "\"" << MAJOR_VERSION << "." << MINOR_VERSION << "\"," << std::endl;
   fout << "  \"SCHEMA_VERSION\": " << config["SCHEMA_VERSION"] << "," << std::endl;
 
-  // Write out float specific meta-data (defined in floatxxx.json file)
-  std::ifstream f(S2BGC_PATH + "/config/meta_default.json");
+  // Float specific meta-data.
+  string metapath = format("{:s}/{:d}/{:d}_meta.json",std::string(config["directories"]["output"]),sn,sn);
+  // Look for SN_meta.json file in float subdirectory, if it doesn't exist, create one using default values [see config/default_meta.json]
+  if (!std::filesystem::exists(metapath)) {
+    string metadefault = S2BGC_PATH + "/config/meta_default.json";
+    std::filesystem::copy(metadefault,metapath);
+    log(std::format("+ Create Float {}_meta.json with default values",sn));
+  }
+
+  std::ifstream f(metapath);
   auto float_meta = nlohmann::ordered_json::parse(f); // user ordered_json to preserver order
   // iterate over meta attributes defined in floatxxx.json file
-  for (auto & [key,val] : float_meta["meta"].items())
+  for (auto & [key,val] : float_meta.items())
     fout << "  \"" << key << "\": " << val << "," << std::endl;
   fout << "  \"PROFILE_NUMBER\": " << cycle << "," << std::endl;
 
