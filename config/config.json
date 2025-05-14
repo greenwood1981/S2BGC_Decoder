@@ -1,5 +1,4 @@
 {
-  "DECODER_VERSION": "0.1",
   "SCHEMA_VERSION": "0.1",
   "directories": {
     "config": "/data1/BGC-SOLO/config",

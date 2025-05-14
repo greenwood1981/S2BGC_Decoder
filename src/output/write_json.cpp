@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <cmath>
+#include <filesystem>
 #include <boost/date_time.hpp>
 using namespace boost::posix_time;
 #include "../hexfile/hexfile.h"
@@ -100,7 +101,18 @@ void hexfile::write_JSON() {
 
   std::stringstream gpstr;
 
-  string jsonpath = format("{:s}/data/{:d}/{:d}_{:-03d}.json",S2BGC_PATH,sn,sn,cycle);
+  // check if float subdirectories exist. If not, create them
+  std::string floatdir = std::string(config["directories"]["output"]) + "/" + std::to_string(sn);
+  if (!std::filesystem::exists(floatdir)) {
+    std::filesystem::create_directory(floatdir);
+    log(std::format("+ Creating float {} subdirectory",sn));
+  }
+  if (!std::filesystem::exists(floatdir+"/json")) {
+    std::filesystem::create_directory(floatdir + "/json");
+    log(std::format("+ Creating float {} json subdirectory",sn));
+  }
+  string jsonpath = format("{:s}/{:d}/json/{:d}_{:-03d}.json",std::string(config["directories"]["output"]),sn,sn,cycle);
+
   std::ofstream fout(jsonpath);
   if (fout.good())
     log( std::format("Writing {:s}",jsonpath) );

@@ -2,6 +2,8 @@
 #include <sstream>
 #include <algorithm>
 #include "../output/write_log.h"
+#include <filesystem>
+#include <format>
 
 #include "../json/json.hpp"
 using json = nlohmann::ordered_json;
@@ -240,6 +242,18 @@ void hexfile::Decode() {
 		prof[pname].Conv_Cnts2SI();
 		//prof[pname].print_stats();
 	}
+}
 
-	write_JSON();
+void hexfile::archive() {
+	// check if float subdirectories exist. If not, create empty skeleton
+	std::string floatdir = std::string(config["directories"]["output"]) + "/" + std::to_string(sn);
+	if (!std::filesystem::exists(floatdir)) {
+		std::filesystem::create_directory(floatdir);
+		log(std::format("+ Creating float {} subdirectory",sn));
+	}
+	if (!std::filesystem::exists(floatdir+"/hex")) {
+		std::filesystem::create_directory(floatdir + "/hex");
+		log(std::format("+ Creating float {} hex subdirectory",sn));
+	}
+	std::filesystem::rename(filepath,floatdir+"/hex/"+filename); // move processed .hex file from incoming to float hex subdirectory
 }

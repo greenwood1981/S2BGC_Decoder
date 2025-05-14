@@ -3,8 +3,11 @@ folders := "logf"
 OBJ := src/.objectfiles
 OFILES=$(shell find $(OBJ) -name "*.o")
 
-BGC_Decoder: src/.objectfiles/.empty src/.objectfiles/write_json.o src/.objectfiles/main.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o
+BGC_Decoder: version src/.objectfiles/.empty src/.objectfiles/write_json.o src/.objectfiles/main.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o
 	g++ -g -std=c++20 $(OFILES) -o BGC_Decoder
+
+version:
+	./version_increment
 
 # Creates necessary directory structure
 src/.objectfiles/.empty:
@@ -18,7 +21,6 @@ $(OBJ)/write_list.o: src/output/write_list.cpp
 	g++ -g -std=c++20 -c src/output/write_list.cpp -o $@
 
 $(OBJ)/write_json.o: src/output/write_json.cpp src/version.h
-	./version_increment
 	g++ -g -std=c++20 -c src/output/write_json.cpp -o $@
 
 $(OBJ)/write_log.o: src/output/write_log.cpp

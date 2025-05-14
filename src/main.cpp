@@ -54,6 +54,9 @@ int main( int argc, char **argv) {
 	}
     hexfile h(filepath.string());
     h.Decode();
+	h.archive();
+   	h.write_JSON();
+
   }
 
   log("Finished.");

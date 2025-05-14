@@ -45,5 +45,6 @@ public:
   void write_List();
   friend std::ostream & operator << ( std::ostream &os, hexfile &h );
   void write_JSON();
+  void archive(); // move processed hex file into float subdirectory, create float directory skeleton if needed
 };
 #endif
