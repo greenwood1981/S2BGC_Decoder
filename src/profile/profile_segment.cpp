@@ -4,7 +4,7 @@
 #include <queue>
 #include <cmath>
 
-profile_segment::profile_segment(vector<uint8_t> d, string n, float g, float o) : data(d), name(n), gain(g), offset(o) {
+profile_segment::profile_segment(vector<uint8_t> d, string n, double g, double o, int as) : data(d), name(n), gain(g), offset(o), autogain_scale(as) {
 	for (int i = 0; i < 9; i++)
 		key[i] = data[i];                     // use packet header as segment key (used to sort segments and identify duplicates)
 	id = data[0];                             // sensorID to identify the type of sensor family
@@ -147,18 +147,11 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 			again = data[ptr++];
 			//std::cout << "auto gain:" << again << " offset:" << aoffset << std::endl;
 		}
-		else if (unpk == 10) {
-			aoffset = -987;
-			again = -987;
-			ptr += 2;
-			//std::cout << "No auto gain:" << again << " offset:" << aoffset << std::endl;
-		}
 
 		cnt = (data[ptr]<<8) + data[ptr+1];
 		buff.push_back(cnt);
-		//raw_counts.push_back(cnt); // first value of NSUB
+		//std::cout << "1st val push back: " << cnt << std::endl;
 
-		//std::cout << "1st val push back: " << (data[ptr]<<8) + data[ptr+1] << std::endl;
 		tmp = (data[ptr+2]<<8) + data[ptr+3];
 		if (tmp >= 0x8000)
 			tmp -= 0x10000;
@@ -198,18 +191,21 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 
 	   	// compute values
 		for (unsigned int z=0; z < numDat_m1; z++) {
-			//cnt = raw_counts.back()+D1[z];
 			cnt = buff.back()+D1[z];
 			buff.push_back(cnt);
-	    	//raw_counts.push_back(cnt);
     	}
 		if (autogain) {
-			//cout << "autogain: " << config["packets"][type]["auto_offset"] << " type: " << type << std::endl;
-			int scalar_offset = 10000;//config["packets"][type]["auto_offset"]; // for auto-gain variables, offset value is multiplied by this constant
+			//int scalar_offset = 20000;//config["packets"][type]["auto_offset"]; // for auto-gain variables, offset value is multiplied by this constant
+			if (autogain_scale) {
+				//std::cout <<" * Using autogain_scale " << autogain_scale << std::endl;
+			}
+			if (!autogain_scale) {
+				std::cout << " * WARNING - autogain_scale is not set" << std::endl;
+			}
 			for (auto b : buff) {
-				raw_counts.push_back(b + (aoffset*scalar_offset));
-				autoGain.push_back(again);
-				autoOffset.push_back(aoffset);
+				//std::cout << "cnt: " << b << " gain: " << again << " offset:" << aoffset << std::endl;
+				//std::cout << "cnt: " << b << "; 1024(1966080 + " << b << " + (" << aoffset << " x " << autogain_scale << ")) = " << 1024*(1966080+b+(aoffset*autogain_scale)) << std::endl;
+				raw_counts.push_back(b + (aoffset*autogain_scale));
 			}
 		}
 		else {
@@ -217,7 +213,6 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 				raw_counts.push_back(b);
 		}
 		buff.clear();
-
     }
 
 	if (raw_counts.size()==0) {

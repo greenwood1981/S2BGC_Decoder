@@ -6,6 +6,7 @@
 using namespace boost::posix_time;
 #include "../hexfile/hexfile.h"
 #include "../json/json.hpp"
+#include "../version.h"
 
 #include "../output/write_log.h"
 #include <format>
@@ -121,7 +122,7 @@ void hexfile::write_JSON() {
   std::map<std::string,int> pcnt;
 
   fout << "  \"FILE_CREATION_DATE\": \"" << date_format(utcnow(),config["DATE_FORMAT"]) << "\"," << std::endl;
-  fout << "  \"DECODER_VERSION\": " << config["DECODER_VERSION"] << "," << std::endl;
+  fout << "  \"DECODER_VERSION\": " << "\"" << MAJOR_VERSION << "." << MINOR_VERSION << "\"" << std::endl;
   fout << "  \"SCHEMA_VERSION\": " << config["SCHEMA_VERSION"] << "," << std::endl;
 
   // Write out float specific meta-data (defined in floatxxx.json file)

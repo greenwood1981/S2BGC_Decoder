@@ -44,7 +44,7 @@ void profile::Conv_Cnts2SI() {
 		if ( channel.count(segment_name) ) {
 			for( unsigned int i = 0; i < s.raw_counts.size(); i++ ) {
 				//if ( s.raw_counts[i] != 0xffff ) // SI unit conversion
-				val = (float)s.raw_counts[i] / s.gain - s.offset;// / gain - offset;
+				val = (double)s.raw_counts[i] / s.gain - s.offset;// / gain - offset;
 				//else
 				//	val = fill;
 				//if (val <= rmin || val >= rmax) // min+max check
@@ -85,8 +85,13 @@ void profile::insert(std::vector<uint8_t> data) {
 
 	channel[ p["name"] ]; // initialize channel if it doesn't already exist
 
-	profile_segment s(data,string(p["name"]),prof["gain"],prof["offset"]);
+	int auto_offset = 0;
+	if (p.count("auto_offset") ) {
+		auto_offset = p["auto_offset"];
+	}
+	profile_segment s(data,string(p["name"]),float(prof["gain"]),float(prof["offset"]),auto_offset);
 	segments.insert(s);
+
 	log( std::format("Packet[{:2X}] {:s} {:s} ({:d}) unpk {:d} size {:d}",sensor_id,string(p["profile"]),string(p["name"]),segment,unpk,data.size()) );
     //std::cout << "Packet[" << sensor_id << "] " << string(p["profile"]) << " " << string(p["name"]) << " (" << segment << ") unpk " << unpk << ", size " << data.size() <<  std::endl;
 	//std::cout << "+Inserting " << string(p["profile"]) << "-" << string(p["name"]) << "[" << segment << "] unpk = " << unpk << " size = " << data.size() << std::endl;

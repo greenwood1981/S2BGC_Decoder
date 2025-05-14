@@ -90,10 +90,10 @@
     },
     "OCR Binned": {
       "PRES": { "gain":25,"offset":10, "col_width":7, "col_precision":2},
-      "DOWN_IRRADIANCE380": { "gain":0.00097656,"offset":-2013265920, "col_width":10, "col_precision":0},
-      "DOWN_IRRADIANCE412": { "gain":0.00097656,"offset":-2013265920, "col_width":10, "col_precision":0},
-      "DOWN_IRRADIANCE490": { "gain":0.00097656,"offset":-2013265920, "col_width":10, "col_precision":0},
-      "PAR": { "gain":0.00097656,"offset":-2013265920, "col_width":10, "col_precision":0}
+      "DOWN_IRRADIANCE380": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0, "comment": "gain=1/1024,offset=1966080*1024"},
+      "DOWN_IRRADIANCE412": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0},
+      "DOWN_IRRADIANCE490": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0},
+      "PAR": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0}
     },
     "NITRATE Binned": {
       "PRES": { "gain":25,"offset":10,"col_width":7,"col_precision":2},
