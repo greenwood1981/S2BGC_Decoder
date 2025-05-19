@@ -141,7 +141,7 @@ void hexfile::write_JSON() {
   string metapath = format("{:s}/{:d}/{:d}_meta.json",std::string(config["directories"]["output"]),sn,sn);
   // Look for SN_meta.json file in float subdirectory, if it doesn't exist, create one using default values [see config/default_meta.json]
   if (!std::filesystem::exists(metapath)) {
-    string metadefault = S2BGC_PATH + "/config/meta_default.json";
+    string metadefault = S2BGC_PATH + "/config/default_meta.json";
     std::filesystem::copy(metadefault,metapath);
     log(std::format("+ Create Float {}_meta.json with default values",sn));
   }
