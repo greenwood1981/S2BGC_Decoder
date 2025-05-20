@@ -1,12 +1,12 @@
 {
   "SCHEMA_VERSION": "0.1",
   "directories": {
-    "config": "/data1/BGC-SOLO/config",
-    "incoming": "/data1/BGC-SOLO/incoming",
-    "output": "/data1/BGC-SOLO/data",
+    "config": "/data1/S2BGC/config",
+    "incoming": "/data1/S2BGC/incoming",
+    "output": "/data1/S2BGC/data",
     "raw": "/data1/solo2/data/raw",
     "hex": "/data1/solo2/data/hex",
-    "log": "/data1/BGC-SOLO/log"
+    "log": "/data1/S2BGC/log"
   },
   "floats": [4027,4028,4029,4007,4008],
   "MOMSN0_threshold": 7200,
