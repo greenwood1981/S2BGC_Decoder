@@ -117,12 +117,40 @@ S2BGC/
 }
 ```
 
-<h3>S2BGC Packet types</h3>
-<table>
-<tr><th>packet id</th><th>subid</th><th>description</th><th>decoder</th></tr>
-<tr><td>0</td><td>all</td><td>GPS packets</td><td>src/gps/gps.cpp GPS()</td></tr>
-<tr><td>c</td><td>12</td><td>BIT OK</td><td>src/BIT/BIT()</td></tr>
-<tr><td>12</td><td></td><td>BIT Beacon</td><td>src/BIT/BIT_Beacon()</td></tr>
-<tr><td>13</tr><td></td><td>BIT OK</td><td>src/BIT/BIT/BIT()</td></tr>
-<tr><td>14</tr><td></td><td>BIT Fail</td><td>src/BIT/BIT/BIT()</td></tr>
-</table>
+<h3>GPS</h3>
+<p>The GPS section includes GPS fixes received during the current cycle. S2BGC floats typically transmit two GPS fixes during each cycle. <b>GPS_START</b> refers to the gps fix prior to descent and <b>GPS_END</b> refers to the gps fix after surfacing.</p>
+
+```javascript
+{
+  "GPS": [
+    { "description": "GPS_START", "TIME": "2025-02-24T09:23:00Z", "LATITUDE":  41.53426, "LONGITUDE":  -70.64682, "HDOP":   0.9, "sat_cnt":  9, "snr_min": 19, "snr_mean": 34, "snr_max": 48, "time_to_fix": 20, "valid": -2 },
+    { "description":   "GPS_END", "TIME": "2025-02-24T22:21:00Z", "LATITUDE":  41.53427, "LONGITUDE":  -70.64680, "HDOP":   0.9, "sat_cnt":  9, "snr_min": 32, "snr_mean": 38, "snr_max": 46, "time_to_fix": 20, "valid": -2 }
+  ]
+}
+```
+
+<h3>ARGO_Mission</h3>
+<p>The ARGO Mission packet summarizes the current state of the S2BGC float. It includes firmware version information, profile targets and durations, as well as the CTD gains and offsets. The information included in this packet is a subset of user configurable parameters. This packet may not be transmitted every cycle.<p>
+
+```javascript
+{
+  "ARGO_Mission": {
+    "Float_Version": 2,
+    "firmware_version": 2.6,
+    "min_ascent_rate": 14,
+    "profile_target": 10,
+    "drift_target": 5,
+    "max_rise_time":  0.00,
+    "max_fall_to_park":  0.00,
+    "max_fall_to_profile":  0.00,
+    "target_drift_time": 12,
+    "target_surface_time": 0.6667,
+    "seek_periods": 0,
+    "seek_time": 0.1667,
+    "ctd_pres": { "gain":   25, "offset":  10},
+    "ctd_temp": { "gain": 1000, "offset":   5},
+    "ctd_psal": { "gain": 1000, "offset":   1},
+    "cycle_time_max":  0.528
+  }
+}
+```
