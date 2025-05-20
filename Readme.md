@@ -51,7 +51,7 @@ S2BGC/
 </pre>
 
 <h2>JSON output</h2>
-<p>A sample .json file is provided. See <a href="https://github.com/greenwood1981/S2BGC_Decoder/blob/master/example/4008_018.json">4008_018.json</a></p>
+<p>The S2BGC decoder is designed to output a single file for each float cycle. Any sections missing in the .json file should be interpreted as packets that have not yet been received. A sample .json file is provided. See <a href="https://github.com/greenwood1981/S2BGC_Decoder/blob/master/example/4008_018.json">4008_018.json</a></p>
 
 <h3>Float Specific metadata</h3>
 <p>Each S2BGC .json file begins with a collection of float specific metadata. This information is meant to be updated by the user and is placed in a file in a float's subdiectory <b>data/40xx/40xx_meta.json</b></p>
@@ -71,8 +71,10 @@ S2BGC/
   "PROFILE_NUMBER": 0
 }
 ```
+
 <h3>hex_summary</h3>
-<p>A summary of raw telemetered data is included after the float metadata. Timestamps and telemetry statistics are summarized in a single line for each RUDICS file and SBD message.</p>
+<p>A summary of raw telemetered data is included after the float metadata. Timestamps and telemetry statistics are summarized in a single line for each RUDICS file and SBD message that is received.</p>
+
 ```javascript
 {
   "hex_summary": [
@@ -85,6 +87,7 @@ S2BGC/
 
 <h3>packet_info</h3>
 <p>Each S2BGC RUDICS session or SBD binary attachment may contain multiple packets of information. This section highlights each type of packets that have been received in a human readable format</p>
+
 ```javascript
 {
   "packet_info": {
@@ -109,6 +112,8 @@ S2BGC/
       { "id": "210000", "bytes":   32, "packets":  1, "description": "CTD Binned PRES" },
       { "id": "210020", "bytes":  204, "packets":  1, "description": "CTD Discrete PRES" },
       { "id": "210033", "bytes":   31, "packets":  1, "description": "CTD Drift PRES" }
+    ]
+  }
 }
 ```
 
