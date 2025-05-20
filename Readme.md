@@ -71,6 +71,46 @@ S2BGC/
   "PROFILE_NUMBER": 0
 }
 ```
+<h3>hex_summary</h3>
+<p>A summary of raw telemetered data is included after the float metadata. Timestamps and telemetry statistics are summarized in a single line for each RUDICS file and SBD message.</p>
+```javascript
+{
+  "hex_summary": [
+    { "PID":  0, "source": "RUDICS", "TIME": "2025-02-26T14:47:43Z", "momsn": 141, "size": 1102, "sensor_ids": [2,0,33,33,33,4,4,4,33,33,33,4] },
+    { "PID":  1, "source": "RUDICS", "TIME": "2025-02-26T14:47:53Z", "momsn": 141, "size": 1862, "sensor_ids": [35,35,35,36,36,36,36,36,34,34] },
+    { "PID":  2, "source": "RUDICS", "TIME": "2025-02-26T14:48:00Z", "momsn": 141, "size":  155, "sensor_ids": [35,35,35,4] }
+  ]
+}
+```
+
+<h3>packet_info</h3>
+<p>Each S2BGC RUDICS session or SBD binary attachment may contain multiple packets of information. This section highlights each type of packets that have been received in a human readable format</p>
+```javascript
+{
+  "packet_info": {
+    "packet_count": 102,
+    "packet_bytes": 3083,
+    "packet_type": [
+      { "id": "000100", "bytes":   27, "packets":  1, "description": "GPS start-dive" },
+      { "id": "000200", "bytes":   27, "packets":  1, "description": "GPS end-dive" },
+      { "id": "020300", "bytes":   40, "packets":  1, "description": "Argo Mission" },
+      { "id": "040000", "bytes":   31, "packets":  1, "description": "Engineering Fall" },
+      { "id": "040001", "bytes":  126, "packets":  1, "description": "Engineering Rise" },
+      { "id": "040400", "bytes":   40, "packets":  1, "description": "Engineering Pump" },
+      { "id": "040B08", "bytes":  111, "packets":  1, "description": "Engineering parameters" },
+      { "id": "050200", "bytes":   23, "packets":  1, "description": "BIST Seabird CTD" },
+      { "id": "050300", "bytes":   33, "packets":  1, "description": "BIST Dissolved Oxygen" },
+      { "id": "050400", "bytes":   33, "packets":  1, "description": "BIST pH" },
+      { "id": "050500", "bytes":   23, "packets":  1, "description": "BIST ECO" },
+      { "id": "050600", "bytes":   33, "packets":  1, "description": "BIST OCR" },
+      { "id": "05070C", "bytes":   59, "packets":  1, "description": "BIST Nitrate Engineering" },
+      { "id": "050800", "bytes":   93, "packets":  1, "description": "BIST Nitrate spectrum" },
+      { "id": "050900", "bytes":  125, "packets":  1, "description": "BIST Nitrate ascii" },
+      { "id": "210000", "bytes":   32, "packets":  1, "description": "CTD Binned PRES" },
+      { "id": "210020", "bytes":  204, "packets":  1, "description": "CTD Discrete PRES" },
+      { "id": "210033", "bytes":   31, "packets":  1, "description": "CTD Drift PRES" }
+}
+```
 
 <h3>S2BGC Packet types</h3>
 <table>
