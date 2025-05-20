@@ -55,7 +55,8 @@ S2BGC/
 
 <h3>Float Specific metadata</h3>
 <p>Each S2BGC .json file begins with a collection of float specific metadata. This information is meant to be updated by the user and is placed in a file in a float's subdiectory <b>data/40xx/40xx_meta.json</b></p>
-```json
+
+```javascript
 {
   "FILE_CREATION_DATE": "2025-05-19T12:20:01Z",
   "DECODER_VERSION": "0.87",
