@@ -54,7 +54,7 @@ S2BGC/
 <p>The S2BGC decoder is designed to output a single file for each float cycle. Any sections missing in the .json file should be interpreted as packets that have not yet been received. A sample .json file is provided. See <a href="https://github.com/greenwood1981/S2BGC_Decoder/blob/master/example/4008_018.json">4008_018.json</a></p>
 
 <h3>Float Specific metadata</h3>
-<p>Each S2BGC .json file begins with a collection of float specific metadata. This information is meant to be updated by the user and is placed in a file in a float's subdiectory <b>data/40xx/40xx_meta.json</b></p>
+<p>Each S2BGC .json file begins with a collection of float specific metadata. This information is meant to be updated by the user and is placed in a file in a float's subdirectory <b>data/40xx/40xx_meta.json</b>. Default meta information is assigned each time a new float is processed. The default values may be updated in <b>config/default_meta.json</b>.</p>
 
 ```javascript
 {
@@ -154,3 +154,28 @@ S2BGC/
   }
 }
 ```
+
+<h3>Fall and Rise</h3>
+<p>S2BGC floats transmit a pressure time-series during fall and another one during rise. Timestamps and phase information is included for each pressure scan [dbar]</p>
+
+```javascript
+{
+  "Fall": [
+    { "TIME": "2025-02-24T09:23:50Z", "PRES":    0.04, "phase":  1, "description": "Start of sink" },
+    { "TIME": "2025-02-24T09:25:30Z", "PRES":    8.84, "phase": 11, "description": "Sinking" },
+    { "TIME": "2025-02-24T09:27:30Z", "PRES":    8.84, "phase": 11, "description": "Sinking" },
+    { "TIME": "2025-02-24T09:29:30Z", "PRES":    8.84, "phase": 11, "description": "Sinking" },
+    { "TIME": "2025-02-24T09:31:30Z", "PRES":    8.84, "phase": 11, "description": "Sinking" },
+    { "TIME": "2025-02-24T10:05:48Z", "PRES":    8.84, "phase":  4, "description": "Drift begin" }
+  ],
+  "Rise": [
+    { "TIME": "2025-02-24T22:08:04Z", "PRES":    8.80, "phase":  8, "description": "Profile start" },
+    { "TIME": "2025-02-24T22:14:23Z", "PRES":    8.76, "phase": 14, "description": "Ascending" },
+    { "TIME": "2025-02-24T22:16:23Z", "PRES":    8.76, "phase": 14, "description": "Ascending" },
+    { "TIME": "2025-02-24T22:21:10Z", "PRES":   -0.04, "phase": 15, "description": "Reached surface" }
+  ]
+}
+```
+
+<h3>BIST</h3>
+<p>Each S2BGC sensor performs a 
