@@ -64,7 +64,7 @@ void mission::parse(std::vector<uint8_t> d) {
             //std::cout << unit << "," << desc << std::endl;
 		}
 		else {
-			std::cout << "* Unknown mission parameter: " << pname << ", " << val << std::endl;
+            log( std::format("* Unknown mission parameter: {}, {}",pname,val) );
 		}
 
 		list.push_back({pname,unit,desc,val});

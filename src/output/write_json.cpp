@@ -151,11 +151,11 @@ void hexfile::write_JSON() {
   // iterate over meta attributes defined in floatxxx.json file
   for (auto & [key,val] : float_meta.items())
     fout << "  \"" << key << "\": " << val << "," << std::endl;
-  fout << "  \"PROFILE_NUMBER\": " << cycle << "," << std::endl;
+  fout << "  \"CYCLE_NUMBER\": " << cycle << "," << std::endl;
 
 
   // ====== HEX SUMMARY ==========
-  fout << "  \"hex_summary\": [" << std::fixed << std::endl;
+  fout << "  \"telemetry_summary\": [" << std::fixed << std::endl;
   first1 = true;
   for (auto & [PID,m] : messages) {
     if (!first1)
@@ -273,8 +273,8 @@ void hexfile::write_JSON() {
     fout << "    \"seek_time\": " << decimal(argo.seek_time_max,6,4) << "," << std::endl;
     fout << "    \"ctd_pres\": { \"gain\": " << decimal(argo.pres_gain,4,0) << ", \"offset\": " << decimal(argo.pres_offset,3,0) << "}," << std::endl;
     fout << "    \"ctd_temp\": { \"gain\": " << decimal(argo.temp_gain,4,0) << ", \"offset\": " << decimal(argo.temp_offset,3,0) << "}," << std::endl;
-    fout << "    \"ctd_psal\": { \"gain\": " << decimal(argo.psal_gain,4,0) << ", \"offset\": " << decimal(argo.psal_offset,3,0) << "}," << std::endl;
-    fout << "    \"cycle_time_max\": " << decimal(argo.cycle_time_max,6,3) << std::endl;
+    fout << "    \"ctd_psal\": { \"gain\": " << decimal(argo.psal_gain,4,0) << ", \"offset\": " << decimal(argo.psal_offset,3,0) << "}" << std::endl;
+    //fout << "    \"cycle_time_max\": " << decimal(argo.cycle_time_max,6,3) << std::endl; // remove from json (derived, not telemetered)
     fout << "  }";
   }
 
