@@ -162,7 +162,7 @@
     "040001": {"profile": "Engineering","name":"Rise"},
     "040200": {"profile": "Engineering","name":"BGC Science"},
     "040400": {"profile": "Engineering","name":"Pump"},
-    "040A00": {"profile": "Engineering","name":"diagnostic"},
+    "040A08": {"profile": "Engineering","name":"diagnostic"},
     "040B08": {"profile": "Engineering","name":"parameters"},
     "040C08": {"profile": "Engineering","name":"BIT Beacon Mode"},
     "040D08": {"profile": "Engineering","name":"BIT OK"},

@@ -11,7 +11,7 @@
 !config/config.json
 !config/diagnostic.json
 !config/Engineering_Data.json
-!config/meta_default.json
+!config/default_meta.json
 !config/mission.json
 !example/4008_018.json
 # List files to include

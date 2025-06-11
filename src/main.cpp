@@ -57,6 +57,17 @@ int main( int argc, char **argv) {
 	h.archive();
    	h.write_JSON();
 
+	if (h.cycle == -1 && config.contains("email") ) {
+      string cmd = std::format("python3 {} 'S2BGC #{:d} startup' '{}' '{}'", std::string(config["email"]["python_script"]), h.sn, h.jsonpath, std::string(config["email"]["alert_recipients"]) );
+      system(cmd.c_str());
+      log( std::format("* Send startup message SUBJECT: 'S2BGC #{:d} startup' to {}",h.sn,std::string(config["email"]["alert_recipients"])));
+	}
+	if (h.cycle == 0 && config.contains("email") ) {
+      string cmd = std::format("python3 {} 'S2BGC #{:d} cycle 0' '{}' '{}'", std::string(config["email"]["python_script"]), h.sn, h.jsonpath, std::string(config["email"]["alert_recipients"]) );
+      system(cmd.c_str());
+      log( std::format("* Send startup message SUBJECT: 'S2BGC #{:d} cycle 0' to {}",h.sn,std::string(config["email"]["alert_recipients"])));
+	}
+
   }
 
   log("Finished.");

@@ -17,11 +17,12 @@ public:
 
 	vector<uint8_t> data;
 	vector<long int> raw_counts;
-	char key[9];
 	string profile;
 	string name;
 	unsigned short index, id;
-	unsigned short message_index;
+	unsigned short sensor_id;     // ID to identify type of sensor family
+	unsigned short pro;           // profile code (header byte #4) how profile is averaged and acquired
+	unsigned short message_index; // profile sub-segment ID (header byte #5 2nd nibble); used to sort segments
 	unsigned int total_scans;
 	unsigned int unpk,nbyte,npts;
 	unsigned int autogain_scale;  // for use with auto-gain profiles; auto-gain transmits a gain/offset for each segment. The gain is multiplied by this

@@ -7,7 +7,7 @@
   "Vcpu": { "type": "U16", "scale": 0.01, "prec":2, "units":"V", "description": "CPU battery voltage"},
   "Vpmp": { "type": "U16", "scale": 0.01, "prec":2, "units":"V", "description": "present Pump battery voltage"},
   "Vple": { "type": "U16", "scale": 0.01, "prec":2, "units":"V", "description": "pump battery voltage at end of last pump"},
-  "vacBIT": { "type": "U16", "scale": 0.01, "prec":2, "units":"inHg","description": "pcase vacuum @BITest"},
+  "vacBIT0": { "type": "U16", "scale": 0.01, "prec":2, "units":"inHg","description": "pcase vacuum @BITest"},
   "vac0": { "type": "U16", "scale": 0.01, "prec":2, "units":"inHg", "description": "pcase vacuum before filling oil bladder at surface"},
   "vac1": { "type": "U16", "scale": 0.01, "prec":2, "units":"inHg", "description": "pcase vacuum after filling oil bladder at surface"},
   "ISRID": { "type": "U16", "description": "ID of last interrupt"},

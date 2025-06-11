@@ -1,15 +1,15 @@
 #include "profile_segment.h"
 #include <iostream>
-#include <string>
+#include <tuple>
 #include <queue>
 #include <cmath>
 
 profile_segment::profile_segment(vector<uint8_t> d, string n, double g, double o, int as) : data(d), name(n), gain(g), offset(o), autogain_scale(as) {
-	for (int i = 0; i < 9; i++)
-		key[i] = data[i];                     // use packet header as segment key (used to sort segments and identify duplicates)
 	id = data[0];                             // sensorID to identify the type of sensor family
 	nbyte = ((data[1] & 0x0f) << 8 )+data[2]; // number of bytes in segment
 	unpk = (data[3] & 0xF0) >> 4;             // data-packing algorithm identifier
+	sensor_id = data[3] & 0x0F;               // ID to identify the type of sensor family
+	pro = data[4];                            // how profile is averaged and acquired
 	message_index = data[5] & 0x0F;           // profile sub-segment ID
 	total_scans = (data[8] <<8) + data[9];
 
@@ -308,11 +308,8 @@ void profile_segment::Unpack_2p0() {
     }
 } // end Unpack_Profile_Data_2p0
 
-// overload < operator to sort segments first by type (alphabetically), then by message index
+// overload < operator to sort segments in this order: id,sensor_id,pro,message_index
 bool profile_segment::operator<(const profile_segment &rhs) const {
-	if (key < rhs.key)
-		return 1;
-	else if (key == rhs.key && index < rhs.message_index)
-		return 1;
-	return 0;
+	// implement sorting using tuples
+	return std::tie(id,sensor_id,pro,message_index) < std::tie(rhs.id,rhs.sensor_id,rhs.pro,rhs.message_index);
 }

@@ -111,7 +111,7 @@ void hexfile::write_JSON() {
     std::filesystem::create_directory(floatdir + "/json");
     log(std::format("+ Creating float {} json subdirectory",sn));
   }
-  string jsonpath = format("{:s}/{:d}/json/{:d}_{:-03d}.json",std::string(config["directories"]["output"]),sn,sn,cycle);
+  jsonpath = format("{:s}/{:d}/json/{:d}_{:-03d}.json",std::string(config["directories"]["output"]),sn,sn,cycle);
 
   std::ofstream fout(jsonpath);
   if (fout.good())
