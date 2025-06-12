@@ -8,7 +8,7 @@
 !LICENSE.txt
 !Readme.md
 #!IDG_S2BGC_Iridium_format.pdf
-#!config/config.json
+!config/config.json
 !config/diagnostic.json
 !config/Engineering_Data.json
 !config/default_meta.json
