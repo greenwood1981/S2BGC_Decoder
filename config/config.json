@@ -89,7 +89,7 @@
     },
     "NITRATE_Discrete": {
       "PRES": { "gain":25,"offset":10,"col_width":7,"col_precision":2},
-      "Res": { "gain":1000,"offset":0.1,"col_width":6,"col_precision":4},
+      "Res": { "gain":10000,"offset":0.1,"col_width":6,"col_precision":4},
       "darkM": { "gain":1,"offset":0,"col_width":6,"col_precision":1},
       "NITRATE": { "gain":100,"offset":0,"col_width":7,"col_precision":2},
       "SeaDark": { "gain":1,"offset":0,"col_width":10,"col_precision":2},
