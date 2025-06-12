@@ -813,8 +813,11 @@ void hexfile::write_JSON() {
       fout << "    { ";
       first2 = true;
       for (auto & [var,vatts] : vdict.items()) {
+        if ( !prof[pname][var].size() ) // skip empty columns
+          continue;
         cwidth = vatts["col_width"];
         cpres  = vatts["col_precision"];
+
 		if ( pname == "NITRATE Binned" && var[0] == 'S' && var != "S01")
 		  continue; // Spectrum columns handled uniquely below
         if (!first2)

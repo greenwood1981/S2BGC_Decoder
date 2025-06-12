@@ -8,6 +8,10 @@
     "hex": "/data1/solo2/data/hex",
     "log": "/data1/S2BGC/log"
   },
+  "email": {
+    "python_script": "/home/bgreenwood/email_alert.py",
+    "alert_recipients": "bgreenwood@whoi.edu,aidan.thayer@whoi.edu,katherine.parise@whoi.edu,dnicholson@whoi.edu"
+  },
   "floats": [4027,4028,4029,4007,4008],
   "MOMSN0_threshold": 7200,
   "DATE_FORMAT": "yyyy-mm-ddTHH:MM:SSZ",

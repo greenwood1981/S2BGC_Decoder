@@ -37,32 +37,22 @@ void profile::Conv_Cnts2SI() {
 	// Convert segment data to SI, perform min/max check, and add to corresponding channel
 	// segments are already ordered - see operator< overload
 	for( auto &s : segments ) {
-        //string segment_name = config["packets"][s.name]["name"];
-		string segment_name = s.name;
-		//cout << "Conv_Cnts2SI; " << segment_name << " size: " << size() << " pnum:" << s.message_index << " indx: " << s.index << " total scans:" << s.total_scans << " gain:" << s.gain << " offset:" << s.offset << std::endl;
-
-		if ( channel.count(segment_name) ) {
-			for( unsigned int i = 0; i < s.raw_counts.size(); i++ ) {
-				//if ( s.raw_counts[i] != 0xffff ) // SI unit conversion
-				val = (double)s.raw_counts[i] / s.gain - s.offset;// / gain - offset;
-				//else
-				//	val = fill;
-				//if (val <= rmin || val >= rmax) // min+max check
-				//	val = fill;
-				channel[segment_name].push_back(val);
-				//cout << segment_name << ": " << val << std::endl;
-			}
-		}
-		else {
-			cout << "conv_cnts2si cant find " << segment_name << std::endl;
+		for( unsigned int i = 0; i < s.raw_counts.size(); i++ ) {
+			//if ( s.raw_counts[i] != 0xffff ) // SI unit conversion
+			val = (double)s.raw_counts[i] / s.gain - s.offset;// / gain - offset;
+			//else
+			//	val = fill;
+			//if (val <= rmin || val >= rmax) // min+max check
+			//	val = fill;
+			channel[s.name].push_back(val);
 		}
 	}
 
 	// Ensure all channels have same length
 	for( auto & [ch_name,ch_data] : channel ) {
-		ch_data.resize( size(), -999 ); // resize each channel to size(); length of the longest channel
+		if (channel[ch_name].size())
+			ch_data.resize( size(), -999 ); // resize each channel to size(); length of the longest channel
 	}
-
 }
 
 profile::profile() {
@@ -83,7 +73,7 @@ void profile::insert(std::vector<uint8_t> data) {
 	auto p = config["packets"][profile_key];                 // packet meta
 	auto prof = config["prof"][ p["profile"].get<std::string>() ][ p["name"].get<std::string>() ]; // profile meta
 
-	channel[ p["name"] ]; // initialize channel if it doesn't already exist
+	//channel[ p["name"] ]; // initialize channel if it doesn't already exist
 
 	int auto_offset = 0;
 	if (p.count("auto_offset") ) {
@@ -93,6 +83,4 @@ void profile::insert(std::vector<uint8_t> data) {
 	segments.insert(s);
 
 	log( std::format("Packet[{:2X}] {:s} {:s} ({:d}) unpk {:d} size {:d}",sensor_id,string(p["profile"]),string(p["name"]),segment,unpk,data.size()) );
-    //std::cout << "Packet[" << sensor_id << "] " << string(p["profile"]) << " " << string(p["name"]) << " (" << segment << ") unpk " << unpk << ", size " << data.size() <<  std::endl;
-	//std::cout << "+Inserting " << string(p["profile"]) << "-" << string(p["name"]) << "[" << segment << "] unpk = " << unpk << " size = " << data.size() << std::endl;
 }

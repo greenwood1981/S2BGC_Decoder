@@ -14,16 +14,6 @@ extern std::string S2BGC_PATH;
 hexfile::hexfile( std::string f ) {
 	upload_command = ""; // initialize upload command
 
-	std::vector<std::string> vnames;
-
-	for (auto & [pname, vdict] : config["prof"].items()) {
-		vnames.clear();
-		for ( auto & [vname, vatts] : vdict.items() )
-			vnames.push_back(vname);
-		prof[pname] = profile(vnames);
-	}
-
-
 	// Open .hex file
 	filepath = f;
     filename = f.substr(f.find_last_of("/\\") + 1); // file basename
@@ -45,7 +35,7 @@ hexfile::hexfile( std::string f ) {
 		}
 		sn = m.SN;
 		cycle = m.cycle;
-		//std::cout << "SN:" << sn << " cycle " << cycle << std::endl;
+
 		// Ignore duplicate messages (identified using PID)
 		if ( messages.count(m.PID) ) {
 			log(std::string(" -- warning, ignoring duplicate PID: ") + std::to_string(m.PID) );
@@ -144,9 +134,7 @@ void hexfile::Decode() {
 
 	for (auto p : packets) {
 			sprintf(key,"%02X%02X%02X",p.data[0],p.data[3] & 0x0F,p.data[4]); // 0,4?
-			//std::cout << "key: " << key << std::endl;
 			if (p.header.sensorID == 0) { // GPS
-				//std::cout << "GPS: " << key << std::endl;
 				gps.push_back(GPS(p.data));
 			}
             else if (p.header.sensorID == 2) { // Argo Mission
