@@ -1,5 +1,6 @@
 #include <iostream> // BG DEBUG
 #include <fstream>
+#include <regex>
 #include <sstream>
 #include <cmath>
 #include <filesystem>
@@ -818,8 +819,10 @@ void hexfile::write_JSON() {
         cwidth = vatts["col_width"];
         cpres  = vatts["col_precision"];
 
-		if ( pname == "NITRATE Binned" && var[0] == 'S' && var != "S01")
-		  continue; // Spectrum columns handled uniquely below
+        std::regex spectra("^S\\d{2}$"); // used to match NITRATE spectra columns "S01 S02 .. S41 S42"
+		if ( pname == "NITRATE_Discrete" && std::regex_match(var,spectra) && var != "S01") {
+          continue; // Spectrum columns handled uniquely below
+        }
         if (!first2)
           fout << ", ";
         first2 = false;
