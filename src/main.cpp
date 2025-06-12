@@ -34,24 +34,29 @@ int main( int argc, char **argv) {
 
   log("Starting BGC-SOLO");
 
+  std::vector<std::filesystem::path> hexfiles;
+  std::string incoming_dir = S2BGC_PATH + "/incoming";
+
   // Command-line options
-  std::string filter;
   if (argc == 3) {
-    filter = std::format("{:04d}_{:03d}.hex",std::stoi(argv[1]),std::stoi(argv[2])); // S2BGC_Decoder [sn] [cycle]
-    log( std::format("* Using filter: {}",filter));
+    std::string filter_filename, filter_filepath;
+    int sn = std::stoi(argv[1]);
+    int cycle = std::stoi(argv[2]);
+    filter_filename = std::format("{:04d}_{:03d}.hex",sn,cycle); // S2BGC_Decoder [sn] [cycle]
+    filter_filepath = std::format("{}/data/{:d}/hex/{}",S2BGC_PATH,sn,filter_filename);
+    if (std::filesystem::exists(filter_filepath)) {
+        log( std::format("* Processing {} using command-line filter",filter_filename));
+        std::filesystem::copy(filter_filepath,incoming_dir); // copy hexfile from float subdirectory to incoming
+    }
+    else {
+        log( std::format("* warning - unable to find {}",filter_filename) );
+    }
   }
 
   // read and process each hex file in hex directory
-  std::string hexdir = S2BGC_PATH + "/incoming";
-  std::vector<std::filesystem::path> hexfiles;
-  std::copy(std::filesystem::directory_iterator(hexdir),std::filesystem::directory_iterator(),std::back_inserter(hexfiles));
+  std::copy(std::filesystem::directory_iterator(incoming_dir),std::filesystem::directory_iterator(),std::back_inserter(hexfiles));
   std::sort(hexfiles.begin(),hexfiles.end());
   for (const std::filesystem::path &filepath : hexfiles) {
-    //log(std::string(" - processing ") + filepath.string() );
-    if ( filter.length() ) {
-		if (filter != filepath.filename().string())
-			continue;
-	}
     hexfile h(filepath.string());
     h.Decode();
 	h.archive();
