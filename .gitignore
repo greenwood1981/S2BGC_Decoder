@@ -4,6 +4,8 @@
 # List directories to include
 !src/*/.cpp
 !src/*/.h
+!src/BIT/SCI_parameter.h
+!src/BIT/SCI_parameter.cpp
 !.gitignore
 !LICENSE.txt
 !Readme.md

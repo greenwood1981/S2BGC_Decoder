@@ -205,7 +205,17 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 			for (auto b : buff) {
 				//std::cout << "cnt: " << b << " gain: " << again << " offset:" << aoffset << std::endl;
 				//std::cout << "cnt: " << b << "; 1024(1966080 + " << b << " + (" << aoffset << " x " << autogain_scale << ")) = " << 1024*(1966080+b+(aoffset*autogain_scale)) << std::endl;
-				raw_counts.push_back(b + (aoffset*autogain_scale));
+				if (id == 0x24) {
+					// pH uses a linear auto-gain
+					raw_counts.push_back((b * again) + (aoffset*autogain_scale));
+				}
+				else if (id == 0x25) {
+					// OCR uses an exponential auto-gain; (2 ^ again)
+					raw_counts.push_back((b << again) + (aoffset*autogain_scale));
+				}
+				else {
+					std::cout << " * warning, auto-gain only implemented for pH and OCR" << std::endl;
+				}
 			}
 		}
 		else {
