@@ -10,6 +10,7 @@
 #include "../bist/bist.h"
 #include "../Engineering/Engineering_Data.h"
 #include "../BIT/BIT.h"
+#include "../BIT/SCI_parameter.h"
 #include "../argo_mission/argo.h"
 
 class hexfile {
@@ -25,6 +26,7 @@ class hexfile {
   no3_bist bist_no3;
   Engineering_Data eng_data;
   mission miss;
+  SCI_parameter sensor;
   Science science;
   BIT bit;
   BIT_Beacon beacon;

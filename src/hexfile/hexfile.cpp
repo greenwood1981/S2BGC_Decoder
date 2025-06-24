@@ -152,8 +152,10 @@ void hexfile::Decode() {
                 }
 				else if (p.header.data_ID == 3)
 					miss.parse(p.data);
-				else if (p.header.data_ID == 4)
-					log("Packet[ 1] SCI parameter array; parsing not implemented");
+				else if (p.header.data_ID == 4) {
+					log("Packet[ 1] SCI parameter array");
+					sensor.Parse(p.data);
+				}
 				else {
 					log(std::string(" -- Unknown parameter listing [") + key + "]; ignore");
 				}

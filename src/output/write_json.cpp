@@ -730,6 +730,41 @@ void hexfile::write_JSON() {
     fout << "  }";
   }
 
+  // ====== SCI_Parameters ========= ==========
+  // 2025/06/23 BG implement SCI_Parameters
+  vector<string> sensor_name  = { "ctd", "DO", "pH", "ECO", "OCR", "Nitrate" };        // sensor names parsed in this order
+  vector<string> region_name  = { "region1","region2","region3","region4","region5" }; // five regions defined for each sensor
+
+  if (sensor.received) {
+    fout << "," << std::endl;
+    fout << "  \"SCI_Parameters\": {" << std::endl;
+    for( int i = 0; i < 6; i++) {
+      fout << "    \"" << sensor_name[i] << "\": {" << std::endl;
+      fout << "      \"Enabled\": " << sensor.sensor[i].Enabled << "," << std::endl;
+      fout << "      \"EnDrift\": " << sensor.sensor[i].EnDrift << "," << std::endl;
+      fout << "      \"DecDrift\": " << sensor.sensor[i].DecDrift << "," << std::endl;
+      fout << "      \"DataType\": " << sensor.sensor[i].dataType << "," << std::endl;
+      fout << "      \"PackType\": " << sensor.sensor[i].packType << "," << std::endl;
+      fout << "      \"gain\": " << sensor.sensor[i].gain << "," << std::endl;
+      fout << "      \"offset\": " << sensor.sensor[i].offset << "," << std::endl;
+      for( int j = 0; j < 5; j++) {
+        fout << "      \"" << region_name[j] << "\":";
+        fout << " {\"zMin\": " << decimal(sensor.sensor[i].region[j].zMin,4,0);
+        fout << ", \"zMax\": " << decimal(sensor.sensor[i].region[j].zMax,4,0);
+        fout << ", \"dz\": " << decimal(sensor.sensor[i].region[j].dz,4,0);
+        fout << ", \"scanT\": " << decimal(sensor.sensor[i].region[j].scanT,4,0) << "}";
+        if (j < 4)
+          fout << ",";
+        fout << std::endl;
+      }
+      fout << "    }";
+      if (i < 5)
+        fout << ",";
+      fout << std::endl;
+    }
+    fout << "  }";
+  }
+
   // ====== ENGINEERING PARAMETERS ==========
   if (eng_data.list.size()) {
     fout << "," << std::endl;

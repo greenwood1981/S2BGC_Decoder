@@ -3,7 +3,7 @@ folders := "logf"
 OBJ := src/.objectfiles
 OFILES=$(shell find $(OBJ) -name "*.o")
 
-BGC_Decoder: version src/.objectfiles/.empty src/.objectfiles/write_json.o src/.objectfiles/main.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o
+BGC_Decoder: version src/.objectfiles/.empty src/.objectfiles/write_json.o src/.objectfiles/main.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o src/.objectfiles/SCI_parameter.o
 	g++ -g -std=c++20 $(OFILES) -o BGC_Decoder
 
 version:
@@ -64,6 +64,9 @@ $(OBJ)/Engineering_Data.o: src/Engineering/Engineering_Data.cpp src/Engineering/
 
 $(OBJ)/BIT.o: src/BIT/BIT.cpp src/BIT/BIT.h
 	g++ -g -std=c++20 -c src/BIT/BIT.cpp -o $@
+
+$(OBJ)/SCI_parameter.o: src/BIT/SCI_parameter.cpp src/BIT/SCI_parameter.h
+	g++ -g -std=c++20 -c src/BIT/SCI_parameter.cpp -o $@
 
 $(OBJ)/log.o: src/output/write_log.cpp src/output/write_log.h
 	g++ -g -std=c++20 -c src/output/write_log.cpp -o $@
