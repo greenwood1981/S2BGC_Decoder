@@ -28,6 +28,8 @@ public:
 
 class SCI_parameter {
 public:
+  SCI_parameter() : received(0) {} // default constructor set received to zero
+
   void Parse( std::vector<uint8_t> d );
   sensor_parameter sensor[6];
 
