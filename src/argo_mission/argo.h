@@ -20,7 +20,7 @@ public:
   double rise_time_max;
   double fall2park_time_max;
   double park2prof_time_max;
-  uint16_t drift_time_target;
+  double drift_time_target;
   uint16_t num_seeks;
   int16_t pres_gain, pres_offset;
   int16_t temp_gain, temp_offset;

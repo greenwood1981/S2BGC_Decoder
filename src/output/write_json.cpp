@@ -265,10 +265,10 @@ void hexfile::write_JSON() {
     fout << "    \"min_ascent_rate\": " << argo.ascent_speed_target << "," << std::endl;
     fout << "    \"profile_target\": " << argo.prof_depth_target << "," << std::endl;
     fout << "    \"drift_target\": " << argo.park_depth_target << "," << std::endl;
-    fout << "    \"max_rise_time\": " << decimal(argo.rise_time_max,5,2) << "," << std::endl;
-    fout << "    \"max_fall_to_park\": " << decimal(argo.fall2park_time_max,5,2) << "," << std::endl;
-    fout << "    \"max_fall_to_profile\": " << decimal(argo.park2prof_time_max,5,2) << "," << std::endl;
-    fout << "    \"target_drift_time\": " << argo.drift_time_target << "," << std::endl;
+    fout << "    \"max_rise_time\": " << decimal(argo.rise_time_max,7,4) << "," << std::endl;
+    fout << "    \"max_fall_to_park\": " << decimal(argo.fall2park_time_max,7,4) << "," << std::endl;
+    fout << "    \"max_fall_to_profile\": " << decimal(argo.park2prof_time_max,7,4) << "," << std::endl;
+    fout << "    \"target_drift_time\": " << decimal(argo.drift_time_target,5,1) << "," << std::endl;
     fout << "    \"target_surface_time\": " << decimal(argo.surf_time_max,6,4) << "," << std::endl;
     fout << "    \"seek_periods\": " << argo.num_seeks << "," << std::endl;
     fout << "    \"seek_time\": " << decimal(argo.seek_time_max,6,4) << "," << std::endl;
