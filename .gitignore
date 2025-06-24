@@ -2,8 +2,8 @@
 *
 
 # List directories to include
-!src/**/.cpp
-!src/**/.h
+!src/*/.cpp
+!src/*/.h
 !.gitignore
 !LICENSE.txt
 !Readme.md
