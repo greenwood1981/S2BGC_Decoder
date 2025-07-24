@@ -8,7 +8,6 @@
 using namespace boost::posix_time;
 #include "../hexfile/hexfile.h"
 #include "../json/json.hpp"
-#include "../version.h"
 
 #include "../output/write_log.h"
 #include <format>
@@ -16,6 +15,7 @@ using namespace boost::posix_time;
 using json = nlohmann::ordered_json;
 extern json config;
 extern string S2BGC_PATH;
+extern int MAJOR_VERSION,MINOR_VERSION;
 
 std::string decimal( float val, int cwidth, int cpres ) {
     std::stringstream ss;

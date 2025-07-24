@@ -19,7 +19,7 @@
 !example/4007_005.json
 # List files to include
 !makefile
-!version_increment.cpp
-!src/version.h
+!src/version_increment.cpp
+!src/version.cpp
 !*/
 

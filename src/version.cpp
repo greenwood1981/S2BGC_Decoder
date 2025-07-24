@@ -1,3 +1,3 @@
 // MINOR_VERSION automatically incremented by makefile
-#define MAJOR_VERSION 0
-#define MINOR_VERSION 144
+int MAJOR_VERSION = 0;
+int MINOR_VERSION = 151;
