@@ -15,7 +15,8 @@
 !config/Engineering_Data.json
 !config/default_meta.json
 !config/mission.json
-!example/4008_018.json
+!example/4007_005.hex
+!example/4007_005.json
 # List files to include
 !makefile
 !version_increment.cpp
