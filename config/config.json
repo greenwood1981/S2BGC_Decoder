@@ -8,7 +8,6 @@
     "hex": "/data1/solo2/data/hex",
     "log": "/data1/S2BGC/log"
   },
-  "floats": [4027,4028,4029,4007,4008],
   "MOMSN0_threshold": 7200,
   "DATE_FORMAT": "yyyy-mm-ddTHH:MM:SSZ",
   "PRESSURE_GAIN": 0.04,
