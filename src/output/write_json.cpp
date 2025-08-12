@@ -828,6 +828,17 @@ void hexfile::write_JSON() {
   }
 
   // ======== WRITE PROFILES ========
+
+  // Identify length of NO3 Spectrum
+  std::stringstream sname;
+  int spectra_count; // default NO3 spectra count = 41
+  for(spectra_count = 50; spectra_count > 0; spectra_count--) {
+  sname.str("");
+  sname << "S" << std::setw(2) << std::setfill('0') << spectra_count;
+  if (prof["NITRATE_Discrete"].channel.contains(sname.str()))
+    break;
+  }
+
   first3 = true;
   for (auto &[pname,vdict] : config["prof"].items()) {
     if (!prof[pname].size())
@@ -864,13 +875,11 @@ void hexfile::write_JSON() {
         //rec[var] = decimal(prof[pname][var][i],cpres);
 
 		// Handle NO3 Spectrum columns uniquely
-		int spectra_count = 41; // default NO3 spectra count = 41
 		if (bist_no3.eng_received) {
 			spectra_count = bist_no3.J_fit2 - bist_no3.J_fit1 + 1;
 		}
 
 		if (var == "S01") {
-			std::stringstream sname;
 			fout << "\"Spectrum\": [" << std::setfill(' ');
 			first4 = true;
 			for ( int s = 1; s <= spectra_count; s++ ) {
