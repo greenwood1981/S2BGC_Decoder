@@ -62,6 +62,6 @@ Fall.Scan[] will now be sorted with duplicates removed */
 void Fall_Data::sort() {
     if (Scan.size() > 0) {
         std::sort(Scan.begin(),Scan.end());
-        Scan.erase(std::unique(Scan.begin(),Scan.end()),Scan.end());
+        //Scan.erase(std::unique(Scan.begin(),Scan.end()),Scan.end()); // 2025/08/12 BG
     }
 }
