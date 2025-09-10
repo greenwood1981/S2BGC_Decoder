@@ -112,13 +112,11 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
 		}
 		else if (patts["type"] == "I16") {
 			val = (d[n]<<8) + d[n+1];
+			if (val > 32767) // 2025/09/10 BG convert uint16 to int16
+				val = val - 65536;
 			n+=2;
 		}
 		else if (patts["type"] == "U24") {
-			val = (d[n]<<16) + (d[n+1]<<8) + d[n+2];
-			n+=3;
-		}
-		else if (patts["type"] == "I24") {
 			val = (d[n]<<16) + (d[n+1]<<8) + d[n+2];
 			n+=3;
 		}
