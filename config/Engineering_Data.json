@@ -1,7 +1,7 @@
 {
   "nQueued": { "type": "U16", "description": "# of data blocks queued for this dive"},
   "nTries":  { "type": "U16", "description": "# of tries to get the data block receive status"},
-  "parXstat": { "type": "U16", "description": "parse_x_reply status in the last surface session"},
+  "parXstat": { "type": "I16", "description": "parse_x_reply status in the last surface session"},
   "SBDIstat": { "type": "U16", "description": "ATSBD return status in last surface session"},
   "SBDsecs": { "type": "U16", "units":"s", "description": "time taken in sending last SBD message"},
   "Vcpu": { "type": "U16", "scale": 0.01, "prec":2, "units":"V", "description": "CPU battery voltage"},
