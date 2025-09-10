@@ -74,3 +74,7 @@ $(OBJ)/log.o: src/output/write_log.cpp src/output/write_log.h
 
 clean:
 	rm BGC_Decoder $(OFILES)
+
+L0toL1: src/L1/L0toL1_09Sep25.cpp
+	g++ -g src/L1/L0toL1_09Sep25.cpp -o L0toL1
+
