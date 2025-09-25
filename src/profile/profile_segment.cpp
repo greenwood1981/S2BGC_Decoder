@@ -1,4 +1,5 @@
 #include "profile_segment.h"
+#include <iomanip>
 #include <iostream>
 #include <tuple>
 #include <queue>
@@ -105,9 +106,10 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 
 	int npts = ((data[1] & 0x0F) << 8) + data[2];
 	int nsubs = (data[6]<<8) + data[7];
-	//std::cout << "Expect npts:" << npts << " nsubs:" << nsubs << std::endl;
-	bool badbit_flag;
-	int nNib_m1,numDat_m1,numNib;
+	bool badbit_flag; // indicates bad scans in current segment, badbit mask follows nibble byte
+	int badbit_cnt;   // # of scans that are masked in badbit mask
+	int D2_size;      // size [nibbles] of 2nd difference
+	int D1_count;     // number of 1st differences; one more than 2nd differences, one less than scan count
 	int tmp;
 	int cnt;
 
@@ -123,74 +125,82 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 			nib.pop();
 		}
 		badbit.clear();
+		badbit_cnt = 0;
 		badbit_flag = data[ptr] & 0x80;
-		nNib_m1 = (data[ptr] & 0x70) >> 4; // [0..7] only [0..5] currently used
-		numDat_m1 = data[ptr] & 0x0F;
-		if (numDat_m1 == 0)
-			break;
 
-		numNib = nNib_m1+1;
+		D2_size = ((data[ptr] & 0x70) >> 4) + 1; // # nibbles for each 2nd difference [0..5] (raw value is # nibbles - 1)
+		D1_count = data[ptr++] & 0x0F;
 
 		// test for badbit_flag
 		if (badbit_flag) {
-			std::cout << "Badbit flag" << tmp << std::endl;
 			tmp = (data[ptr] << 8) + data[ptr+1];
+			std::cout << "Badbit flag: " << std::hex << std::setw(4) << std::setfill('0') << tmp << std::dec << std::endl;
 			ptr += 2;
-			for(int x = 0; x < 15; x++)
+			for(int x = 0; x < 15; x++) {
 				badbit.push_back( (tmp & (1<<x)) > 0 );
+				if (tmp & (1<<x))
+					badbit_cnt++;
+			}
 		}
 
 		// If autogain is enabled
-		ptr++;
 		if (autogain) {
 			aoffset = data[ptr++];
 			again = data[ptr++];
 			//std::cout << "auto gain:" << again << " offset:" << aoffset << std::endl;
 		}
 
+		// Read first count
 		cnt = (data[ptr]<<8) + data[ptr+1];
 		buff.push_back(cnt);
+		n++;
+		ptr += 2;
 		//std::cout << "1st val push back: " << cnt << std::endl;
 
-		tmp = (data[ptr+2]<<8) + data[ptr+3];
-		if (tmp >= 0x8000)
-			tmp -= 0x10000;
-		D1.push_back(tmp);
-
-		ptr += 4;
-		n += 2;
-
-		// Read in nibbles
-		int i = numNib * (numDat_m1-1);
-		while (i > 1) {
-			nib.push( (data[ptr] & 0xF0) >> 4);
-			nib.push( data[ptr++] & 0x0F );
-			i-=2;
-		}
-		if (i==1)
-			nib.push( (data[ptr++] & 0xF0) >> 4 );	// for odd numbers of nibbles, there could be one last one
-
-		for(int x = 0; x < numDat_m1-1; x++) {
-			int v = 0;
-			int i = 0;
-			for(; i < numNib; i++) {
-				v <<= 4;
-				v += nib.front();
-				nib.pop();
-			}
-			if (v >= lim[i-1])
-				v -= ref[i-1];
-			D2.push_back(v);
+		// Read the first difference scan (if sent)
+		if (D1_count) {
+			tmp = (data[ptr]<<8) + data[ptr+1];
+			if (tmp >= 0x8000)
+				tmp -= 0x10000;
+			D1.push_back(tmp);
+			ptr += 2;
 			n++;
 		}
 
-		// compute 1st differences
-	    for (unsigned int n=0; n<numDat_m1-1; n++) { // there will be npts-2 D2 values
-	    	D1.push_back(D1[n]+D2[n]);
-	   	}
+		if (D1_count > 1) {
+			// Read in nibbles (if sent)
+			int i = D2_size * (D1_count - 1 - badbit_cnt); // D1_count - 1 = # nibbles; bad measurements are not sent, so subtract these
+			while (i > 1) {
+				nib.push( (data[ptr] & 0xF0) >> 4);
+				nib.push( data[ptr++] & 0x0F );
+				i-=2;
+			}
+			if (i==1)
+				nib.push( (data[ptr++] & 0xF0) >> 4 );	// for odd numbers of nibbles, there could be one last one
+
+			// Compute second differences
+			for(int x = 0; x < D1_count - 1 - badbit_cnt; x++) {
+				int v = 0;
+				int i = 0;
+				for(; i < D2_size; i++) {
+					v <<= 4;
+					v += nib.front();
+					nib.pop();
+				}
+				if (v >= lim[i-1])
+					v -= ref[i-1]; // convert unsigned to signed
+				D2.push_back(v);
+				n++;
+			}
+
+			// Compute 1st differences
+			for (unsigned int n=0; n<D1_count-1; n++) { // there will be D1_count-1 2nd differences
+				D1.push_back(D1[n]+D2[n]);
+			}
+		}
 
 	   	// compute values
-		for (unsigned int z=0; z < numDat_m1; z++) {
+		for (unsigned int z=0; z < D1_count; z++) {
 			cnt = buff.back()+D1[z];
 			buff.push_back(cnt);
     	}
@@ -223,6 +233,19 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 				raw_counts.push_back(b);
 		}
 		buff.clear();
+
+		// insert fill values for flagged bad scans
+		int r = 0;
+		if (badbit_flag) {
+			std::vector<long int> tmp;
+			for( int x = 0; x < D1_count+1; x++ ) {
+				if (badbit[x])
+					tmp.push_back(-999);
+				else
+					tmp.push_back( raw_counts[r++] );
+			}
+			raw_counts = tmp;
+		}
     }
 
 	if (raw_counts.size()==0) {

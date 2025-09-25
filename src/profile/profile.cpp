@@ -38,12 +38,10 @@ void profile::Conv_Cnts2SI() {
 	// segments are already ordered - see operator< overload
 	for( auto &s : segments ) {
 		for( unsigned int i = 0; i < s.raw_counts.size(); i++ ) {
-			//if ( s.raw_counts[i] != 0xffff ) // SI unit conversion
-			val = (double)s.raw_counts[i] / s.gain - s.offset;// / gain - offset;
-			//else
-			//	val = fill;
-			//if (val <= rmin || val >= rmax) // min+max check
-			//	val = fill;
+			if (s.raw_counts[i] == -999)
+				val = -999;
+			else
+				val = (double)s.raw_counts[i] / s.gain - s.offset;// / gain - offset;
 			channel[s.name].push_back(val);
 		}
 	}
