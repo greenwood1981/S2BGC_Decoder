@@ -42,7 +42,7 @@ void hexfile::write_List() {
 
 		// print profile [columns]
 		fout << std::setfill(' ') << std::fixed;
-		for (int i = 0; i < prof[pname].size(); i++) {
+		for (int i = 0; i < prof[pname].size; i++) {
 			fout << "  ";
 			for (auto & [var,vatts] : vdict.items()) {
 				cwidth = std::max( var.size(), (size_t)vatts["col_width"]);

@@ -19,29 +19,36 @@ profile_segment::profile_segment(vector<uint8_t> d, string n, double g, double o
 		index = message_index*300;
 		Unpack_Integer((unpk>>2)+1);
 	}
+	// this sub-message uses 1st diff compression
 	if (unpk == 1) {
 		index = message_index*300;
-		Unpack_1p0(0); // standard 1st diff
+		Unpack_1p0(0);
 	}
+	// this sub-message uses 1st diff w/ badbit capability
+	// --WARNING-- this datatype is not commonly used and has not been fully implemented
 	if (unpk == 5) {
 		index = message_index*300;
-		Unpack_1p0(0); // standard 1st diff w/ bad scan enabled
+		Unpack_1p0(0);
 	}
+	// this sub-message uses 1st diff with autogain.
+	// --WARNING-- this datatype is not commonly used and has not been fully implemented
 	if (unpk == 9) {
 		index = message_index*300;
-		Unpack_1p0(1); // 1st diff with autogain
+		Unpack_1p0(1);
 	}
+	// this sub-message uses 2nd diff compression
 	if (unpk == 2) {
-		// this sub-message uses 2nd diff compression
-		index = data[6]*16;
+		// 2nd diff compression profile segments overlap 1 sample. Adding message_index accounts for this
+		index = data[6]*16 + message_index;
 		Unpack_2p0();
 	}
-	if (unpk == 6) { // BGC 2nd diff w/ bad bit capability
-		// this sub-message uses 2nd diff compression
+	// this sub-message uses BGC 2nd diff compression w/ badbit capability
+	if (unpk == 6) {
 		index = (data[6] << 8) + data[7];
 		Unpack_BGC_2d(0);
 	}
-	if (unpk == 10) { // BGC 2nd diff w/ autogain
+	// this sub-message uses BGC 2nd diff compresion w/ autogain capability
+	if (unpk == 10) {
 		index = (data[6] << 8) + data[7];
 		Unpack_BGC_2d(1);
 	}

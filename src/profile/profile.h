@@ -39,7 +39,8 @@ public:
 	void Conv_Cnts2SI();
 	unsigned int compression() { return segments.begin()->unpk; } // returns sensor compression. Assumes each channel uses same compression
 	unsigned int vars() { return channel.size(); } // return number of sensor channels
-	unsigned long size(); // All channels must be same length, this function returns size of longest profile segment
+	unsigned int segment_size(); // returns size of longest profile segment; this is used to ensure that all columns ultimately have the same length
+	unsigned int size; // size of the profile (all channels should have identical length
 };
 
 #endif

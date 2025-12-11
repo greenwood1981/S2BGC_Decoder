@@ -842,7 +842,7 @@ void hexfile::write_JSON() {
 
   first3 = true;
   for (auto &[pname,vdict] : config["prof"].items()) {
-    if (!prof[pname].size())
+    if (!prof[pname].size)
       continue; // skip json output for empty profiles
     fout << "," << std::endl;
     //if (!first3)
@@ -853,7 +853,7 @@ void hexfile::write_JSON() {
 	int cwidth;   // column width defined in config.json
     // columns
     first1 = true;
-	for (int i = 0; i < prof[pname].size(); i++) {
+	for (int i = 0; i < prof[pname].size; i++) {
       if (!first1)
         fout << ",";
       fout << std::endl;

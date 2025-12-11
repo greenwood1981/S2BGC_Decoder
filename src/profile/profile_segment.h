@@ -28,6 +28,6 @@ public:
 	unsigned int autogain_scale;  // for use with auto-gain profiles; auto-gain transmits a gain/offset for each segment. The gain is multiplied by this
 	double gain,offset;           // gain/offset used to convert raw counts to SI units (as defined in config.json)
 	bool operator<(const profile_segment &rhs) const; // used to sort segments first by type, then by message_index
-	unsigned long length() { return index + raw_counts.size(); }
+	unsigned int length() const { return index + raw_counts.size(); }
 };
 #endif
