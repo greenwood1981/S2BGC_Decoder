@@ -831,6 +831,7 @@ void hexfile::write_JSON() {
 
   // Identify length of NO3 Spectrum
   std::stringstream sname;
+  std::regex spectra("^S\\d{2}$"); // used to match NITRATE spectra columns "S01 S02 .. S41 S42"
   int spectra_count; // default NO3 spectra count = 41
   for(spectra_count = 50; spectra_count > 0; spectra_count--) {
   sname.str("");
@@ -865,7 +866,6 @@ void hexfile::write_JSON() {
         cwidth = vatts["col_width"];
         cpres  = vatts["col_precision"];
 
-        std::regex spectra("^S\\d{2}$"); // used to match NITRATE spectra columns "S01 S02 .. S41 S42"
 		if ( pname == "NITRATE_Discrete" && std::regex_match(var,spectra) && var != "S01") {
           continue; // Spectrum columns handled uniquely below
         }
