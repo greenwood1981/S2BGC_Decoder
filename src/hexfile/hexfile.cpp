@@ -156,6 +156,9 @@ void hexfile::Decode() {
 					log("Packet[ 1] SCI parameter array");
 					sensor.Parse(p.data);
 				}
+				else if (p.header.data_ID == 5) {
+					sensor_info.parse(p.data);
+				}
 				else {
 					log(std::string(" -- Unknown parameter listing [") + key + "]; ignore");
 				}

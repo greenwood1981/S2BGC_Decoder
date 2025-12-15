@@ -6,6 +6,8 @@
 !src/*/.h
 !src/BIT/SCI_parameter.h
 !src/BIT/SCI_parameter.cpp
+!src/Engineering/pass_through.h
+!src/Engineering/pass_through.cpp
 !.gitignore
 !LICENSE.txt
 !Readme.md

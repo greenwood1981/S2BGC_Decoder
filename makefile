@@ -3,7 +3,7 @@ folders := "logf"
 OBJ := src/.objectfiles
 OFILES=$(shell find $(OBJ) -name "*.o")
 
-BGC_Decoder: src/version_increment src/.objectfiles/.empty src/.objectfiles/write_json.o src/.objectfiles/main.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o src/.objectfiles/SCI_parameter.o
+BGC_Decoder: src/version_increment src/.objectfiles/.empty src/.objectfiles/write_json.o src/.objectfiles/main.o src/.objectfiles/write_list.o src/.objectfiles/message.o src/.objectfiles/profile.o src/.objectfiles/pump.o src/.objectfiles/rise.o src/.objectfiles/fall.o src/.objectfiles/gps.o src/.objectfiles/bist.o src/.objectfiles/Engineering_Data.o src/.objectfiles/BIT.o src/.objectfiles/argo.o src/.objectfiles/SCI_parameter.o src/.objectfiles/pass_through.o
 	./src/version_increment
 	g++ -g -std=c++20 $(OFILES) src/version.cpp -o BGC_Decoder
 
@@ -62,6 +62,9 @@ $(OBJ)/bist.o: src/bist/bist.cpp src/bist/bist.h
 
 $(OBJ)/Engineering_Data.o: src/Engineering/Engineering_Data.cpp src/Engineering/Engineering_Data.h
 	g++ -g -std=c++20 -c src/Engineering/Engineering_Data.cpp -o $@
+
+$(OBJ)/pass_through.o: src/Engineering/pass_through.cpp src/Engineering/pass_through.h
+	g++ -g -std=c++20 -c src/Engineering/pass_through.cpp -o $@
 
 $(OBJ)/BIT.o: src/BIT/BIT.cpp src/BIT/BIT.h
 	g++ -g -std=c++20 -c src/BIT/BIT.cpp -o $@

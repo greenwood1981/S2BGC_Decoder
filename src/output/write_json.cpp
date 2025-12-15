@@ -765,6 +765,32 @@ void hexfile::write_JSON() {
     fout << "  }";
   }
 
+  // ========= PASS THROUGH =================
+  std::map<string,string> pass_through = {{"CTD",sensor_info.ctd_info},{"DO",sensor_info.do_info},{"pH",sensor_info.ph_info},
+                                          {"ECO",sensor_info.eco_info},{"OCR",sensor_info.ocr_info},{"SUNA",sensor_info.suna_info}};
+  std::stringstream ss;
+  std::string line;
+
+  for( auto &[sensor,sensor_info] : pass_through ) {
+    if (sensor_info.size()) {
+      ss.str("");
+      ss.clear();
+      fout << "," << std::endl;
+      fout << "  \"" << sensor << "_pass_through\": [" << std::endl;
+      ss << sensor_info;
+      first1 = true;
+      while (std::getline(ss,line)) {
+        if (line.size()) {
+          if (!first1)
+            fout << "," << std::endl;
+          first1 = false;
+          fout << "    \"" << line << "\"";
+        }
+      }
+      fout << std::endl << "  ]";
+    }
+  }
+
   // ====== ENGINEERING PARAMETERS ==========
   if (eng_data.list.size()) {
     fout << "," << std::endl;

@@ -9,6 +9,7 @@
 #include "../gps/gps.h"
 #include "../bist/bist.h"
 #include "../Engineering/Engineering_Data.h"
+#include "../Engineering/pass_through.h"
 #include "../BIT/BIT.h"
 #include "../BIT/SCI_parameter.h"
 #include "../argo_mission/argo.h"
@@ -28,6 +29,7 @@ class hexfile {
   mission miss;
   SCI_parameter sensor;
   Science science;
+  pass_through sensor_info;
   BIT bit;
   BIT_Beacon beacon;
   Argo_Mission argo;
