@@ -186,6 +186,11 @@ void hexfile::write_JSON() {
       int data_id = p.data[3] & 0x0F;
       int segment = p.data[5] & 0x0F; // sub-segment index
       int pro = p.data[4];
+
+      // Pump v1 packet format does not have a fixed pro byte; hardcode it to be zero
+      if (sensor_id == 4 && data_id == 4)
+        pro = 0;
+
       sprintf(profile_key,"%02X%02X%02X",sensor_id,data_id,pro);
       // Initialize if missing
       if (packets.count(std::string(profile_key)) == 0)
@@ -857,7 +862,7 @@ void hexfile::write_JSON() {
       fout << "\"PRES\": " << decimal(s.pres,7,2) << ", ";
       fout << "\"current\": " << decimal(s.curr,5,0) << ", ";
       fout << "\"voltage\": " << decimal(s.volt,5,2) << ", ";
-      fout << "\"pump_time\": " << decimal(s.pump_time,3,0) << ", ";
+      fout << "\"pump_time\": " << decimal(s.pump_time,4,0) << ", ";
       fout << "\"vac_start\": " << decimal(s.vac_strt,2,0) << ", ";
       fout << "\"vac_end\": " << decimal(s.vac_end,3,0) << ", ";
       fout << "\"phase\": " << decimal(s.phase,2,0) << ", ";

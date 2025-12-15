@@ -29,7 +29,6 @@ void Pump_Data::Decode(std::vector<uint8_t> &data) {
 		uint32_t secs = *reinterpret_cast<uint32_t *>(&data[i]);
 		secs = __builtin_bswap32(secs);
 		start_time = ptime(date(2000,1,1),seconds(secs));
-		std::cout << "Pump start: " << start_time << std::endl;
 		i += 4;
 	}
 
@@ -48,7 +47,6 @@ void Pump_Data::Decode(std::vector<uint8_t> &data) {
 		s.curr = s.c_cnt * (float)config["CURRENT_GAIN"] - (float)config["CURRENT_OFFSET"];
 		s.vac_strt = data[i+9];
 		s.vac_end = data[i+10];
-		std::cout << s.pres << " " << s.pump_time << " " << s.volt << " " << s.curr << " " << s.vac_strt << " " << s.vac_end << std::endl;
 
 		i += 11;
 
@@ -57,7 +55,6 @@ void Pump_Data::Decode(std::vector<uint8_t> &data) {
 				// firmware versions 10.2+ samples include elapsed time
 				s.t_cnt = (data[i]<<16) + (data[i+1]<<8) + data[i+2];
 				s.time = start_time + seconds(s.t_cnt); // compute scan time
-				std::cout << s.t_cnt << " " << s.time << std::endl;
 				i+=3;
 				break;
 		}
