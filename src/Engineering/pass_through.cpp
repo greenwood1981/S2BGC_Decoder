@@ -28,15 +28,4 @@ void pass_through::parse( std::vector<uint8_t> d ) {
       case 5: suna_info += d[i]; break;
     }
   }
-
-  std::cout << "Info:" << std::endl;
-  switch(d[4]) {
-    case 0:  std::cout << ctd_info; break;
-    case 1:  std::cout << do_info; break;
-    case 2:  std::cout << ph_info; break;
-    case 3:  std::cout << eco_info; break;
-    case 4:  std::cout << ocr_info; break;
-    case 5:  std::cout << suna_info; break;
-  }
-
 }
