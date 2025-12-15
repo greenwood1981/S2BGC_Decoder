@@ -14,10 +14,6 @@ public:
 	void sort();
 	int received;            // Flag set if all the data has been received
 	ptime start_time;        // Start time for time series
-	float pres_start;        // DP0 pressure before start to descend
-	float pres_end;          // [DP1] pressure at end of descent
-	unsigned int total_time; // from open valve to end of sink [seconds]
-	float speed;             // Average descent rate while sinking [cm/s]
 	friend std::ostream & operator << ( std::ostream &os, Rise_Data &r );
 
 };
