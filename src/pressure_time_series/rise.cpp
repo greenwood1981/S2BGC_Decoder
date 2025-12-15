@@ -25,12 +25,11 @@ void Rise_Data::Decode( std::vector<uint8_t> data) {
 
 	PressureTimeSeries s;
 	unsigned int tmp;   // temp variable used to discard unused fields
-	unsigned int ver;   // Packet version
 	unsigned int nbyte; // Number of bytes for this packet
 
 	s.packet = data[0] & 0x0F;
 
-	ver = (data[1] & 0xF0) >> 4;
+	version = (data[1] & 0xF0) >> 4;
 
 	nbyte = ((data[1] & 0x0F) << 8) + data[2];
     int subseg = data[5] & 0x0F;
@@ -42,7 +41,7 @@ void Rise_Data::Decode( std::vector<uint8_t> data) {
         s.index = i;
 
         // parse timestamp (seconds since start_time defined above)
-		switch (ver) {
+		switch (version) {
 			case 0:  t_cnt = (data[i]<<8) + data[i+1]; i+=2; break;                   // original S2BGC firmware
 			case 1:  t_cnt = (data[i]<<16) + (data[i+1]<<8) + data[i+2]; i+=3; break; // firmware versions 10.2+
 			default: t_cnt = (data[i]<<8) + data[i+1]; i+=2; log("* Warning, unknown Rise packet version"); break;
@@ -56,7 +55,7 @@ void Rise_Data::Decode( std::vector<uint8_t> data) {
         Scan.push_back(s);
     }
     sort();
-    log(std::format("Packet[{:2X}] Rise Data ({:d}) format: {:d}",s.packet,subseg,ver) );
+    log(std::format("Packet[{:2X}] Rise Data ({:d}) format: {:d}",s.packet,subseg,version) );
 
 }
 

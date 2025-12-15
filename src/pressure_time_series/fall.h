@@ -14,8 +14,10 @@ public:
 	void Decode( std::vector<uint8_t> d);
 	std::vector <PressureTimeSeries> Scan; // Descent pressure time series scans
 	void sort();
-	int received;            // Flag set if all the data has been received
-	ptime start_time;        // Start time for time series
+
+	int received;         // Flag set if all the data has been received
+	ptime start_time;     // Start time for time series
+	unsigned int version; // fall packet version [0:original S2BGC 1:firmwares v10.2+]
 	friend std::ostream & operator << ( std::ostream &os, Fall_Data &s );
 };
 #endif

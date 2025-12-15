@@ -357,10 +357,16 @@ void hexfile::write_JSON() {
 
 
   // ==== FALL TIME-SERIES ======
-  std::map<int,std::string> dive_phase = {
+  std::map<int,std::string> dive_phase_v0 = {
     {0,"Dive start"},{1,"Start of sink"},{2,"Pump 2 target"},{3,"Seek"},{4,"Drift begin"},{5,"Drift seek"},{6,"Fall to profile begin"},
     {7,"pre-ascend"},{8,"Profile start"},{9,"Profile end"},{10,"Ice turnaround"},{11,"Sinking"},{12,"Drifting"},{13,"Descending"},
     {14,"Ascending"},{15,"Reached surface"} };
+
+  std::map<int,std::string> dive_phase_v1 = { // firmware v10.2+; "pre-ascend" moved from 7 to 15 for uniformity with other SOLO floats
+    {0,"Dive start"},{1,"Start of sink"},{2,"Pump 2 target"},{3,"Seek"},{4,"Drift begin"},{5,"Drift seek"},{6,"Fall to profile begin"},
+    {7,"Profile start"},{8,"Profile end"},{9,"Ice turnaround"},{10,"Sinking"},{11,"Drifting"},{12,"Descending"},{13,"Ascending"},
+    {14,"Reached surface"},{15,"pre-ascend"} };
+
 
   if (fall.Scan.size()) {
     fout << "," << std::endl;
@@ -374,7 +380,10 @@ void hexfile::write_JSON() {
       fout << "\"TIME\": \"" << date_format(s.time,config["DATE_FORMAT"]) << "\", ";
       fout << "\"PRES\": " << decimal(s.pres,7,2) << ", ";
       fout << "\"phase\": " << decimal(s.phase,2,0) << ", ";
-      fout << "\"description\": \"" << dive_phase[s.phase] << "\" }";
+      switch(fall.version) {
+        case 1:  fout << "\"description\": \"" << dive_phase_v1[s.phase] << "\" }"; break;// firmware v10.2+
+        default: fout << "\"description\": \"" << dive_phase_v0[s.phase] << "\" }"; break;
+      }
     }
     fout << std::endl;
     fout << "  ]";
@@ -393,7 +402,10 @@ void hexfile::write_JSON() {
       fout << "\"TIME\": \"" << date_format(s.time,config["DATE_FORMAT"]) << "\", ";
       fout << "\"PRES\": " << decimal(s.pres,7,2) << ", ";
       fout << "\"phase\": " << decimal(s.phase,2,0) << ", ";
-      fout << "\"description\": \"" << dive_phase[s.phase] << "\" }";
+      switch(rise.version) {
+        case 1:  fout << "\"description\": \"" << dive_phase_v1[s.phase] << "\" }"; break; // firmware v10.2+
+        default: fout << "\"description\": \"" << dive_phase_v0[s.phase] << "\" }"; break;
+      }
     }
     fout << std::endl;
     fout << "  ]";
@@ -840,6 +852,8 @@ void hexfile::write_JSON() {
         fout << "," << std::endl;
       first1 = false;
       fout << "    { ";
+      if (pump.version == 1) // firmware v10.2+
+        fout << "\"TIME\": \"" << date_format(s.time,config["DATE_FORMAT"]) << "\", ";
       fout << "\"PRES\": " << decimal(s.pres,7,2) << ", ";
       fout << "\"current\": " << decimal(s.curr,5,0) << ", ";
       fout << "\"voltage\": " << decimal(s.volt,5,2) << ", ";
@@ -847,7 +861,10 @@ void hexfile::write_JSON() {
       fout << "\"vac_start\": " << decimal(s.vac_strt,2,0) << ", ";
       fout << "\"vac_end\": " << decimal(s.vac_end,3,0) << ", ";
       fout << "\"phase\": " << decimal(s.phase,2,0) << ", ";
-      fout << "\"description\": \"" << dive_phase[s.phase] << "\" }";
+      switch(pump.version) {
+        case 1:  fout << "\"description\": \"" << dive_phase_v1[s.phase] << "\" }"; break; // firmware v10.2+
+        default: fout << "\"description\": \"" << dive_phase_v0[s.phase] << "\" }"; break;
+      }
     }
     fout << std::endl;
     fout << "  ]";
