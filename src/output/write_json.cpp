@@ -860,10 +860,10 @@ void hexfile::write_JSON() {
       if (pump.version == 1) // firmware v10.2+
         fout << "\"TIME\": \"" << date_format(s.time,config["DATE_FORMAT"]) << "\", ";
       fout << "\"PRES\": " << decimal(s.pres,7,2) << ", ";
-      fout << "\"current\": " << decimal(s.curr,5,0) << ", ";
+      fout << "\"current\": " << decimal(s.curr,4,0) << ", ";
       fout << "\"voltage\": " << decimal(s.volt,5,2) << ", ";
       fout << "\"pump_time\": " << decimal(s.pump_time,4,0) << ", ";
-      fout << "\"vac_start\": " << decimal(s.vac_strt,2,0) << ", ";
+      fout << "\"vac_start\": " << decimal(s.vac_strt,3,0) << ", ";
       fout << "\"vac_end\": " << decimal(s.vac_end,3,0) << ", ";
       fout << "\"phase\": " << decimal(s.phase,2,0) << ", ";
       switch(pump.version) {

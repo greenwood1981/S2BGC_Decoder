@@ -13,15 +13,15 @@ extern json config;
 void Pump_Data::Decode(std::vector<uint8_t> &data) {
 	received = 1;
 	PumpTimeSeries s;
-	unsigned int i;     // temporary indexing variable
-	unsigned int nbyte; // Number of bytes for this pump packet
+	unsigned int i;         // temporary indexing variable
+	unsigned int index = 0; // index of pump sample in current packet
+	unsigned int nbyte;     // Number of bytes for this pump packet
 
 	s.phase = -9;
-	s.packet = data[0] & 0x0F;
+	int pid = data[0] & 0x0F;
 	version = (data[1] & 0xF0) >> 4;
 	nbyte = ((data[1] & 0x0F) << 8) + data[2];
-
-	int subseg = data[5] & 0x0F;
+	s.packet = data[5] & 0x0F;
 
 	i = 6;
 	if (version == 1) {
@@ -33,10 +33,12 @@ void Pump_Data::Decode(std::vector<uint8_t> &data) {
 	}
 
 	while (i < nbyte -1) {
-		s.index = i;
+		s.index = index++;
 		s.phase = (data[i] & 0xF0) >> 4;
 		s.p_cnt = ((data[i] & 0x0F) << 16) + (data[i+1] << 8) + data[i+2];
 		s.pres = s.p_cnt * (float)config["PRESSURE_GAIN"] - (float)config["PRESSURE_OFFSET"];
+		if (s.pres > 2500)
+			s.pres = -999; // blank out bad pressure scans
 		s.pump_time = (data[i+3]<<8) + data[i+4];
 		if (s.pump_time > 0x8000)
 			s.pump_time -= 0x10000;
@@ -62,7 +64,7 @@ void Pump_Data::Decode(std::vector<uint8_t> &data) {
 	}
 
 	std::sort(Scan.begin(),Scan.end());
-	log(std::format("Packet[{:2X}] Pump Data ({:d}) format: {:d}",s.packet,subseg,version) );
+	log(std::format("Packet[{:2X}] Pump Data ({:d}) format: {:d}",pid,s.packet,version) );
 }
 
 std::ostream & operator << ( std::ostream &os, Pump_Data &p ) {
