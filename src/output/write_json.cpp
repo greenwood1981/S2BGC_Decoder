@@ -750,7 +750,9 @@ void hexfile::write_JSON() {
   if (science.received) {
     fout << "," << std::endl;
     fout << "  \"Science\": {" << std::endl;
-    fout << "    \"Files\": " << science.nWritten << "," << std::endl;
+    fout << "    \"Version\": " << decimal(science.version,3,1) << "," << std::endl;
+    fout << "    \"Files\": " << science.files << "," << std::endl;
+    fout << "    \"Files_Written\": " << science.nWritten << "," << std::endl;
     fout << "    \"Space_available_MB\": " << science.mbFree << "," << std::endl;
     fout << "    \"CTD_Errors\": " << science.ctdParseErr << "," << std::endl;
     fout << "    \"Pressure_Jumps\": " << science.jumpCtr << std::endl;

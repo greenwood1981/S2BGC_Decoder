@@ -101,18 +101,16 @@ void BIT_Beacon::parse(std::vector<uint8_t> data) {
 
 void Science::Parse(std::vector<uint8_t> data) {
   int ptype = data[0] & 0x0F;
-  unsigned int n = 6;
 
   received = 1;
   log( std::format("Packet[{:2X}] BGC Science",ptype) );
 
-  nWritten = data[n]*256 + data[n+1];
-  n += 2;
-  mbFree = data[n]*256 + data[n+1];
-  n += 2;
-  ctdParseErr = data[n]*256 + data[n+1];
-  n += 2;
-  if (data[n] == ';')
+  version = data[7] + (data[9]/10.0);
+  files = data[10]*256 + data[11];
+  nWritten = data[12]*256 + data[13];
+  mbFree = data[14]*256 + data[15];
+  ctdParseErr = data[16]*256 + data[17];
+  if (data[18] == ';')
     return;
-  jumpCtr = data[n]*256 + data[n+1]; // included starting with firmware v2.4+
+  jumpCtr = data[18]*256 + data[19]; // included starting with firmware v2.4+
 }

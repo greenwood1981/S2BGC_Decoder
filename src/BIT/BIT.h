@@ -55,6 +55,8 @@ public:
   Science() : received(0),jumpCtr(0) {};
   void Parse( std::vector<uint8_t> d );
   bool received;
+  float version;
+  unsigned short files;
   unsigned short nWritten;
   unsigned short mbFree;
   unsigned short ctdParseErr;
