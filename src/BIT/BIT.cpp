@@ -19,11 +19,6 @@ void BIT::parse(std::vector<uint8_t> data) {
 		log( std::format("Packet[{:2X}] BIT OK", ptype) );
 		status = 0;
 	}
-	// BG implemented in BIT_Beacon() -- see below
-    //else if (data[3] == 0XC) {
-	//	log( std::format("Packet[{:0>2X}] BIT Beacon Mode; parsing not implemented", ptype) );
-	//	return;
-    //}
 	else {
 		log( std::format("Packet[{:2X}] BIT Fail",ptype) );
  		status = data[n];

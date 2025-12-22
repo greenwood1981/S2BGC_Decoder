@@ -32,7 +32,6 @@ void ctd_bist::parse(std::vector<uint8_t> d) {
     flag = std::pow(2,p);
     if (status & flag) {
       log( std::format( " -- {}", CTD_Status_Flag[p]) );
-      //std::cout << " -- " << CTD_Status_Flag[p] << std::endl;;
     }
   }
 
@@ -62,7 +61,6 @@ void do_bist::parse(std::vector<uint8_t> d) {
     flag = std::pow(2,p);
     if (status & flag) {
       log( std::format( " -- {}", DO_Status_Flag[p]) );
-      //std::cout << " -- " << DO_Status_Flag[p] << std::endl;;
     }
   }
 
@@ -93,7 +91,6 @@ void ph_bist::parse(std::vector<uint8_t> d) {
     flag = std::pow(2,p);
     if (status & flag) {
       log( std::format( " -- {}", pH_Status_Flag[p]) );
-      //std::cout << " -- " << pH_Status_Flag[p] << std::endl;;
     }
   }
 
@@ -124,7 +121,6 @@ void eco_bist::parse(std::vector<uint8_t> d) {
     flag = std::pow(2,p);
     if (status & flag) {
       log( std::format( " -- {}", eco_Status_Flag[p]) );
-      //std::cout << " -- " << eco_Status_Flag[p] << std::endl;;
     }
   }
 
@@ -154,7 +150,6 @@ void ocr_bist::parse(std::vector<uint8_t> d) {
     flag = std::pow(2,p);
     if (status & flag) {
       log( std::format( " -- {}", ocr_Status_Flag[p]) );
-      //std::cout << " -- " << ocr_Status_Flag[p] << std::endl;;
     }
   }
 
@@ -192,7 +187,6 @@ void no3_bist::parse_engineer(std::vector<uint8_t> d) {
     flag = std::pow(2,p);
     if (status & flag) {
       log( std::format( " -- {}", NO3_Status_Flag[p]) );
-      //std::cout << " -- " << NO3_Status_Flag[p] << std::endl;;
     }
   }
 
@@ -242,7 +236,6 @@ void no3_bist::parse_ascii(std::vector<uint8_t> d) {
 
 	// exclude packet header (first 6) and termination char ';' (last)
 	for(uint16_t i = 6; i < nDatSize - 1; i++) {
-		//std::cout << "pushing back " << (char) d[i] << std::endl;
 		SUNA_str.push_back((char)d[i]);
 	}
 	// Split ASCII string using ',' delimiter

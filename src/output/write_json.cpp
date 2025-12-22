@@ -166,9 +166,6 @@ void hexfile::write_JSON() {
     fout << "\"source\": \"" << m.type << "\", ";
     fout << "\"TIME\": \"" << date_format(m.time,config["DATE_FORMAT"]) << "\", ";
     fout << "\"momsn\": " << m.momsn << ", ";
-	//fout << std::setfill('0');
-	//fout << "\"TIME\": \"" << std::setw(4) << m.yy << "/" << std::setw(2) << m.mm << "/" << std::setw(2) << m.dd;
-    //fout << "T" << std::setw(2) << m.HH << ":" << std::setw(2) << m.MM << ":" << std::setw(2) << m.SS << "Z\", ";
 	fout << std::setfill(' ');
     fout << "\"size\": " << std::setw(4) << m.size << ", ";
     fout << "\"sensor_ids\": [";
@@ -432,7 +429,6 @@ void hexfile::write_JSON() {
     {11,"SBE Solo2 has control of the SBE!!"}
   };
   std::map<int,std::string> ctd_errors;
-  //bist_ctd.status = 134; // BG TESTING -- CLEAN UP
   for (int p = 0; p < 12; p++) {
     flag = std::pow(2,p);
     if (bist_ctd.status & flag) {
@@ -476,7 +472,6 @@ void hexfile::write_JSON() {
     {5,"DO emulation mode"}
   };
   std::map<int,std::string> do_errors;
-  //bist_do.status = 38; // BG TESTING -- CLEAN UP
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (bist_do.status & flag) {
@@ -522,7 +517,6 @@ void hexfile::write_JSON() {
     {5,"pH emulation mode"}
   };
   std::map<int,std::string> ph_errors;
-  //bist_ph.status = 38; // BG TESTING -- CLEAN UP
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (bist_ph.status & flag) {
@@ -568,7 +562,6 @@ void hexfile::write_JSON() {
     {5,"ECO emulation mode"}
   };
   std::map<int,std::string> eco_errors;
-  //bist_eco.status = 38; // BG TESTING -- CLEAN UP
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (bist_eco.status & flag) {
@@ -613,7 +606,6 @@ void hexfile::write_JSON() {
     {5,"OCR emulation mode"}
   };
   std::map<int,std::string> ocr_errors;
-  //bist_ocr.status = 38; // BG TESTING -- CLEAN UP
   for (int p = 0; p < 6; p++) {
     flag = std::pow(2,p);
     if (bist_ocr.status & flag) {
@@ -666,7 +658,6 @@ void hexfile::write_JSON() {
     {12,"Nitrate error on setting the RTC"}
   };
   std::map<int,std::string> no3_errors;
-  //bist_no3.status = 38; // BG TESTING -- CLEAN UP
   for (int p = 0; p < 13; p++) {
     flag = std::pow(2,p);
     if (bist_no3.status & flag) {
@@ -830,7 +821,6 @@ void hexfile::write_JSON() {
         fout << "," << std::endl;
       first1 = false;
       fout << "    " << std::setw(10) << p.name << ": { ";
-      //fout << "\"name\": " << std::setw(10) << p.name << ", ";
       fout << "\"value\": " << p.val << ", ";
   	  fout << "\"unit\": " << std::setw(6) << p.unit << ", ";
       fout << "\"description\": \"" << p.desc << "\" }";
@@ -905,8 +895,6 @@ void hexfile::write_JSON() {
     if (!prof[pname].size)
       continue; // skip json output for empty profiles
     fout << "," << std::endl;
-    //if (!first3)
-    //  fout << "," << std::endl;
     first3 = false;
     fout << "  \"" << pname << "\": [";
 	int cpres;    // column precision
@@ -932,7 +920,6 @@ void hexfile::write_JSON() {
         if (!first2)
           fout << ", ";
         first2 = false;
-        //rec[var] = decimal(prof[pname][var][i],cpres);
 
 		// Handle NO3 Spectrum columns uniquely
 		if (bist_no3.eng_received) {

@@ -23,14 +23,12 @@ void mission::parse(std::vector<uint8_t> d) {
 	int ptype = d[0] & 0xF;
 	int pseg  = d[5];
     log( std::format("Packet[{:2X}] Mission ({:d})",ptype,pseg) );
-	//std::cout << "Packet[" << std::setw(2) << ptype << "] Mission (" << pseg << ")" << std::endl;
 
 	std::ifstream f(S2BGC_PATH + "/config/mission.json",std::ios::in);
 	json params = json::parse(f);
 
 	std::string pname,val,unit="",desc="";
 	int n = 6;
-	//std::cout << "Begin parameter parse; size=" << ((d[1]&0XFF)<<8)+d[2] << " subid=" << int(d[3]) << std::endl;
 
 	// Read in parameters one at a time
 	while ( d[n] != ';' ) {
@@ -55,13 +53,11 @@ void mission::parse(std::vector<uint8_t> d) {
 			//std::cout << "ignoring '" << std::hex << std::setw(2) << std::setfill('0') << int(d[n]) << "." << std::endl << std::dec << std::setfill(' ');
 	        n++; // skip next character '|'
 		}
-        //std::cout << std::setw(12) << pname << "," << val << std::endl;
 
 		// Match mission parameter to known parameters as defined in config/mission.json
 		if ( params.contains(pname) ) {
 			unit = params[pname]["units"];
 			desc = params[pname]["description"];
-            //std::cout << unit << "," << desc << std::endl;
 		}
 		else {
             log( std::format("* Unknown mission parameter: {}, {}",pname,val) );
@@ -69,7 +65,6 @@ void mission::parse(std::vector<uint8_t> d) {
 
 		list.push_back({pname,unit,desc,val});
     }
-    //std::cout << "End parse" << std::endl;
 }
 
 
@@ -80,7 +75,6 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
 	int ptype = d[0] & 0xF;
 	int pseg  = d[5];
     log( std::format("Packet[{:2X}] Engineering Data ({:d})",ptype,pseg) );
-	//std::cout << "Packet[" << std::setw(2) << ptype << "] Engineering_Data (" << pseg << ")" << std::endl;
 
     std::ifstream f(pfile);
     json params = json::parse(f);
@@ -127,7 +121,6 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
 			n+=2;
 		}
 		if (patts.contains("scale")) {
-			//std::cout << pname << " scale: " << patts["scale"] << std::endl;
 			if (patts["scale"] == "pres")
 				val /= double(config["prof"]["CTD Discrete"]["PRES"]["gain"]);
 			else if (patts["scale"] == "temp")
@@ -139,7 +132,6 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
 			prec = (int)patts["prec"]; // precision for output (list files and json); every parameter with scale needs "prec" defined
 		}
 		if (patts.contains("offset")) {
-			//std::cout << pname << " offset: " << patts["offset"] << std::endl;
 			if (patts["offset"] == "pres")
 				val -= double(config["prof"]["CTD Discrete"]["PRES"]["offset"]);
 			else if (patts["offset"] == "temp")
@@ -158,6 +150,5 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
 		pnamestr << "\"" << pname << "\"";
 		vstr << std::setw(PARAMETER_VALUE_WIDTH) << std::fixed << std::setprecision(prec) << val;
 		list.push_back({pnamestr.str(),unit.str(),(std::string)patts["description"],vstr.str()});
-		//std::cout << std::setw(PARAMETER_NAME_WIDTH) << pname << " " << std::setw(PARAMETER_VALUE_WIDTH) << std::fixed << std::setprecision(prec) << val << " " << std::setw(PARAMETER_UNIT_WIDTH) << unit.str() << " " << (std::string)patts["description"] << std::endl;
 	}
 }

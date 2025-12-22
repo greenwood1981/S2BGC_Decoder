@@ -14,7 +14,6 @@ class Engineering_Data {
 public:
   std::vector<BGC_SOLO_parameter> list;
   void parse_pfile(std::vector<uint8_t>d, std::string pfile);
-  //void parse(std::vector<uint8_t>d);
 };
 
 // Mission parameters

@@ -38,7 +38,6 @@ std::istream & operator >> ( std::istream &is, message &m ) {
 		is >> tmp >> m.SN >> delim >>  m.cycle >> delim >> m.size >> delim;
 		is >> tmp; // IMEI
 		is >> m.momsn >> delim; // MOMSN
-		//log(std::string(" momsn ") + std::to_string(m.momsn) );
 		is >> tmp; // MTMSN
 		is >> m.PID >> delim; // Message ID (PID)
 		is >> m.yy >> delim >> m.mm >> delim >> m.dd >> delim; // Year,Month,Day

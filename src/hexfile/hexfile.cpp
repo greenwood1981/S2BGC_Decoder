@@ -42,7 +42,6 @@ hexfile::hexfile( std::string f ) {
 			continue;
 		}
 		for( const auto &p : m.packets ) {
-			// log(std::string(" -- inserting: ") + std::to_string((int)p.header.sensorID) + " " + std::to_string( (int)p.header.data_ID ) );
 			packets.push_back(p);
 		}
 		messages[m.PID] = m;
@@ -115,7 +114,6 @@ void hexfile::print() {
 	for (auto & [PID,m] : messages) {
 		//std::cout << "Message PID:" << PID << " size: " << m.size << std::endl;
 		for (auto p : m.packets) {
-			//std::cout << " - SID:" << std::hex << std::setfill('0') << std::setw(2) << (uint16_t)p.header.sensorID << std::dec << " size: " << std::setw(3) << p.size << " ";
 			for( int h = 0; h < p.data.size(); h++) {
 				if (h > 50) {
 					break;
