@@ -41,7 +41,7 @@ void Argo_Mission::Decode(std::vector<uint8_t> &data) {
   received = 1;
   packet_version = (data[0] & 0xf0) >> 4;
   int pnum = data[0] & 0x0f;
-  log( std::format("Packet[{:2X}] Argo Mission ",pnum) );
+  //log( std::format("Packet[{:2X}] Argo Mission ",pnum) );
   firmware_version = data[5] + ( 0.1 * data[6] );
   prof_depth_target = (data[7]<<8) + data[8];
   park_depth_target = (data[9]<<8) + data[10];
@@ -72,7 +72,7 @@ void Argo_Mission::Decode(std::vector<uint8_t> &data) {
   }
 
   compute_cycle_time_max();
-  log( std::format("  {:d}m park, {:d}m profile, {:.2f} days",park_depth_target,prof_depth_target,cycle_time_max) );
+  log( std::format("Packet[{:2X}] Argo Mission {:d}m park, {:d}m profile, {:.2f} days",pnum,park_depth_target,prof_depth_target,cycle_time_max) );
 }
 
 void Argo_Mission::compute_cycle_time_max() {
