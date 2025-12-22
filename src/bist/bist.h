@@ -104,7 +104,8 @@ public:
 	float J_fit2;
 	float J_Spectra;
 	float J_SeaDark;
-	uint16_t svals[8];
+	std::vector<uint16_t> svals;
+	uint32_t spectral_count;
 	std::string SUNA_str;
 	boost::posix_time::ptime ascii_timestamp;
 	float ascii_pressure;

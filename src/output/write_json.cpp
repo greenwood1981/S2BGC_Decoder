@@ -703,35 +703,45 @@ void hexfile::write_JSON() {
     fout << "    \"J_fit1\": " << decimal(bist_no3.J_fit1,5,1) << "," << std::endl;
     fout << "    \"J_fit2\": " << decimal(bist_no3.J_fit2,5,1) << "," << std::endl;
     fout << "    \"J_Spectra\": " << decimal(bist_no3.J_Spectra,7,2) << "," << std::endl;
-    fout << "    \"J_SeaDark\": " << decimal(bist_no3.J_SeaDark,7,2) << "," << std::endl;
+    fout << "    \"J_SeaDark\": " << decimal(bist_no3.J_SeaDark,7,2);
 	if ( bist_no3.spectral_received ) {
-		for( int x = 0; x <8; x++ )
-			fout << "    \"sval[" << x << "]\": " << bist_no3.svals[x] << "," << std::endl;
+		fout << "," << std::endl;
+		fout << "    \"sval\": [";
+		first1 = true;
+		for( int x = 0; x < bist_no3.spectral_count; x++ ) {
+			if (!first1)
+				fout << ",";
+			first1 = false;
+			fout << bist_no3.svals[x];
+		}
+		fout << "]";
 	}
-	if ( bist_no3.ascii_received )
+	if ( bist_no3.ascii_received ) {
+		fout << "," << std::endl;
 		fout << "    \"SUNA_str\": \"" << bist_no3.SUNA_str << "\"," << std::endl;
-	fout << "    \"ascii_timestamp\": \"" << date_format(bist_no3.ascii_timestamp,config["DATE_FORMAT"]) << "\"," << std::endl;
-	fout << "    \"ascii_pressure\": " << decimal(bist_no3.ascii_pressure,7,2) << "," << std::endl;
-	fout << "    \"ascii_temperature\": " << decimal(bist_no3.ascii_temperature,7,4) << "," << std::endl;
-	fout << "    \"ascii_salinity\": " << decimal(bist_no3.ascii_salinity,7,4) << "," << std::endl;
-	fout << "    \"ascii_sample_count\": " << bist_no3.ascii_sample_count << "," << std::endl;
-	fout << "    \"ascii_cycle_count\": " << bist_no3.ascii_cycle_count << "," << std::endl;
-	fout << "    \"ascii_error_count\": " << bist_no3.ascii_error_count << "," << std::endl;
-	fout << "    \"ascii_internal_temp\": " << decimal(bist_no3.ascii_internal_temp,5,2) << "," << std::endl;
-	fout << "    \"ascii_spectrometer\": " << decimal(bist_no3.ascii_spectrometer,6,2) << "," << std::endl;
-	fout << "    \"ascii_RH\": " << decimal(bist_no3.ascii_RH,5,2) << "," << std::endl;
-	fout << "    \"ascii_voltage\": " << decimal(bist_no3.ascii_voltage,5,2) << "," << std::endl;
-	fout << "    \"ascii_current\": " << decimal(bist_no3.ascii_current,6,3) << "," << std::endl;
-	fout << "    \"ascii_ref_detector_mean\": " << bist_no3.ascii_ref_detector_mean << "," << std::endl;
-	fout << "    \"ascii_ref_detector_std\": " << bist_no3.ascii_ref_detector_std << "," << std::endl;
-	fout << "    \"ascii_dark_spectrum_mean\": " << bist_no3.ascii_dark_spectrum_mean << "," << std::endl;
-	fout << "    \"ascii_dark_spectrum_std\": " << bist_no3.ascii_dark_spectrum_std << "," << std::endl;
-	fout << "    \"ascii_sensor_salinity\": " << decimal(bist_no3.ascii_sensor_salinity,5,2) << "," << std::endl;
-	fout << "    \"ascii_sensor_nitrate\": " << decimal(bist_no3.ascii_sensor_nitrate,5,2) << "," << std::endl;
-	fout << "    \"ascii_residual_rms\": " << decimal(bist_no3.ascii_residual_rms,8,7) << "," << std::endl;
-	fout << "    \"ascii_FIT_pixel_begin\": " << bist_no3.ascii_FIT_pixel_begin << "," << std::endl;
-	fout << "    \"ascii_FIT_pixel_end\": " << bist_no3.ascii_FIT_pixel_end << std::endl;
-    fout << "  }";
+		fout << "    \"ascii_timestamp\": \"" << date_format(bist_no3.ascii_timestamp,config["DATE_FORMAT"]) << "\"," << std::endl;
+		fout << "    \"ascii_pressure\": " << decimal(bist_no3.ascii_pressure,7,2) << "," << std::endl;
+		fout << "    \"ascii_temperature\": " << decimal(bist_no3.ascii_temperature,7,4) << "," << std::endl;
+		fout << "    \"ascii_salinity\": " << decimal(bist_no3.ascii_salinity,7,4) << "," << std::endl;
+		fout << "    \"ascii_sample_count\": " << bist_no3.ascii_sample_count << "," << std::endl;
+		fout << "    \"ascii_cycle_count\": " << bist_no3.ascii_cycle_count << "," << std::endl;
+		fout << "    \"ascii_error_count\": " << bist_no3.ascii_error_count << "," << std::endl;
+		fout << "    \"ascii_internal_temp\": " << decimal(bist_no3.ascii_internal_temp,5,2) << "," << std::endl;
+		fout << "    \"ascii_spectrometer\": " << decimal(bist_no3.ascii_spectrometer,6,2) << "," << std::endl;
+		fout << "    \"ascii_RH\": " << decimal(bist_no3.ascii_RH,5,2) << "," << std::endl;
+		fout << "    \"ascii_voltage\": " << decimal(bist_no3.ascii_voltage,5,2) << "," << std::endl;
+		fout << "    \"ascii_current\": " << decimal(bist_no3.ascii_current,6,3) << "," << std::endl;
+		fout << "    \"ascii_ref_detector_mean\": " << bist_no3.ascii_ref_detector_mean << "," << std::endl;
+		fout << "    \"ascii_ref_detector_std\": " << bist_no3.ascii_ref_detector_std << "," << std::endl;
+		fout << "    \"ascii_dark_spectrum_mean\": " << bist_no3.ascii_dark_spectrum_mean << "," << std::endl;
+		fout << "    \"ascii_dark_spectrum_std\": " << bist_no3.ascii_dark_spectrum_std << "," << std::endl;
+		fout << "    \"ascii_sensor_salinity\": " << decimal(bist_no3.ascii_sensor_salinity,5,2) << "," << std::endl;
+		fout << "    \"ascii_sensor_nitrate\": " << decimal(bist_no3.ascii_sensor_nitrate,5,2) << "," << std::endl;
+		fout << "    \"ascii_residual_rms\": " << decimal(bist_no3.ascii_residual_rms,8,7) << "," << std::endl;
+		fout << "    \"ascii_FIT_pixel_begin\": " << bist_no3.ascii_FIT_pixel_begin << "," << std::endl;
+		fout << "    \"ascii_FIT_pixel_end\": " << bist_no3.ascii_FIT_pixel_end;
+	}
+    fout << std::endl << "  }";
   }
 
 

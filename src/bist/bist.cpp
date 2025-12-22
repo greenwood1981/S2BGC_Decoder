@@ -212,19 +212,25 @@ void no3_bist::parse_engineer(std::vector<uint8_t> d) {
 };
 
 void no3_bist::parse_spectral(std::vector<uint8_t> d) {
+	if ( d.size() < 22 ) {
+		log(std::format(" * warning, BIST Nitrate spectrum packet is incomplete [{:d} bytes]; skipping",d.size()) );
+		spectral_received = 0;
+		return;
+	}
+
 	spectral_received = 1;
+
+	spectral_count = (d[6]<<8) + d[7];
+
 	// Contains NO3 spectral values S[k]
-	int p = 6;
-	for(int i = 0; i < 8; i++) {
-		svals[i] = ( d[p] << 8 ) + d[p+1]; // 2-byte integer counts of each spectral bin
-		p += 2;
+	for(int i = 8; i < 8 + (spectral_count*2); i++) {
+		svals.push_back( (d[i]<<8) + d[i+1] ); // 2-byte integer counts of each spectral bin
 	}
 };
 
 void no3_bist::parse_ascii(std::vector<uint8_t> d) {
 	if ( d.size() < 22 ) {
-		log(std::format(" * warning, Nitrate ascii packet incomplete [{:d} bytes]; skipping",d.size()) );
-		//std::cout << " * warning, Nitrate ascii packet incomplete [" << d.size() << " bytes]; skipping" << std::endl;
+		log(std::format(" * warning, BIST Nitrate ascii packet is incomplete [{:d} bytes]; skipping",d.size()) );
 		ascii_received = 0;
 		return;
 	}
