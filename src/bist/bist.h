@@ -62,9 +62,9 @@ public:
 	uint16_t volt_cnt;
 	uint16_t maMax;
 	uint16_t maAvg;
-	uint16_t Chl;
-	uint16_t bb;
-	uint16_t CDOM;
+	uint16_t ch01;
+	uint16_t ch02;
+	uint16_t ch03;
 	bool received;
 	eco_bist() : received(0) {}
 	void parse(std::vector<uint8_t> d);

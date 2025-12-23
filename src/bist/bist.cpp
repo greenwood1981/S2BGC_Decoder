@@ -128,9 +128,9 @@ void eco_bist::parse(std::vector<uint8_t> d) {
   volt_cnt = ( d[10] << 8 ) + d[11];
   maMax = ( d[12] << 8 ) + d[13];
   maAvg = ( d[14] << 8 ) + d[15];
-  Chl = ( d[16] << 8 ) + d[17];
-  bb = ( d[18] << 8 ) + d[19];
-  CDOM = ( d[20] << 8 ) + d[21];
+  ch01 = ( d[16] << 8 ) + d[17];
+  ch02 = ( d[18] << 8 ) + d[19];
+  ch03 = ( d[20] << 8 ) + d[21];
 };
 
 void ocr_bist::parse(std::vector<uint8_t> d) {
@@ -314,9 +314,9 @@ void eco_bist::print() {
 	std::cout << "volt_cnt = " << 0.01*volt_cnt << std::endl;
 	std::cout << "maMax    = " << maMax << std::endl;
 	std::cout << "maAvg    = " << maAvg << std::endl;
-	std::cout << "Chl      = " << Chl << std::endl;
-	std::cout << "bb       = " << bb << std::endl;
-	std::cout << "CDOM     = " << CDOM << std::endl;
+	std::cout << "ch01     = " << ch01 << std::endl;
+	std::cout << "ch02     = " << ch02 << std::endl;
+	std::cout << "ch03     = " << ch03 << std::endl;
 };
 
 void ocr_bist::print() {

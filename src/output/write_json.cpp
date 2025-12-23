@@ -590,9 +590,9 @@ void hexfile::write_JSON() {
     fout << "    \"voltage_V\": " << 0.01 * bist_eco.volt_cnt << "," << std::endl;
     fout << "    \"max_current_mA\": " << bist_eco.maMax << "," << std::endl;
     fout << "    \"avg_current_mA\": " << bist_eco.maAvg << "," << std::endl;
-    fout << "    \"Chl\": " << bist_eco.Chl << "," << std::endl;
-    fout << "    \"bb\": " << bist_eco.bb << "," << std::endl;
-    fout << "    \"CDOM\": " << bist_eco.CDOM << std::endl;
+    fout << "    \"ch01\": " << bist_eco.ch01 << "," << std::endl;
+    fout << "    \"ch02\": " << bist_eco.ch02 << "," << std::endl;
+    fout << "    \"ch03\": " << bist_eco.ch03 << std::endl;
     fout << "  }";
   }
 
