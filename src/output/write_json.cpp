@@ -147,13 +147,28 @@ void hexfile::write_JSON() {
     log(std::format("+ Create Float {}_meta.json with default values",sn));
   }
 
+  // Read float specific meta-data and write attributes to json file
   std::ifstream f(metapath);
-  auto float_meta = nlohmann::ordered_json::parse(f); // user ordered_json to preserver order
-  // iterate over meta attributes defined in floatxxx.json file
+  auto float_meta = nlohmann::ordered_json::parse(f); // use ordered_json to preserve order
+  // iterate over meta attributes defined in xxxx_meta.json file
   for (auto & [key,val] : float_meta.items())
     fout << "  \"" << key << "\": " << val << "," << std::endl;
-  fout << "  \"CYCLE_NUMBER\": " << cycle << "," << std::endl;
 
+  // Float specific config info
+  string floatconfig = format("{:s}/{:d}/{:d}_config.json",std::string(config["directories"]["output"]),sn,sn);
+  // Look for SN_config.json file in float subdirectory. If it doesn't exist, create one using default value [see config/default_config.json]
+  if (!std::filesystem::exists(floatconfig)) {
+    string configdefault = S2BGC_PATH + "/config/default_float_config.json";
+    std::filesystem::copy(configdefault,floatconfig);
+    log(std::format("+ Create Float {}_config.json with default values",sn));
+  }
+
+  // Read float specific config file and write firmware version to json file
+  std::ifstream f2(floatconfig);
+  auto float_config = nlohmann::ordered_json::parse(f2); // use ordered_json to preserve order
+  fout << "  \"FIRMWARE_VERSION\": " << float_config["FIRMWARE_VERSION"] << "," << std::endl;
+
+  fout << "  \"CYCLE_NUMBER\": " << cycle << "," << std::endl;
 
   // ====== HEX SUMMARY ==========
   fout << "  \"telemetry_summary\": [" << std::fixed << std::endl;

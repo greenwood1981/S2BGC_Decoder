@@ -17,6 +17,7 @@
 !config/Engineering_Data.json
 !config/default_meta.json
 !config/mission.json
+!config/default_float_config.json
 !example/4007_005.hex
 !example/4007_005.json
 # List files to include

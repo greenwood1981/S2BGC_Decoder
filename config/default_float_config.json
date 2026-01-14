@@ -1,0 +1,14 @@
+{
+  "FIRMWARE_VERSION": "10.2",
+  "ECO": {
+    "ch1": "CHLA",
+    "ch2": "BACKSCATTERING700",
+    "ch3": "FLUORESCENCE_CDOM"
+  },
+  "OCR": {
+    "ch1": "DOWN_IRRADIANCE380",
+    "ch2": "DOWN_IRRADIANCE412",
+    "ch3": "DOWN_IRRADIANCE490",
+    "ch4": "PAR"
+  }
+}
