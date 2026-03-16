@@ -36,9 +36,9 @@ std::istream & operator >> ( std::istream &is, message &m ) {
           m.type = "RUDICS";
 		// Parse SN,cycle,size,PID,Date from 2nd line
 		is >> tmp >> m.SN >> delim >>  m.cycle >> delim >> m.size >> delim;
-		is >> tmp; // IMEI
+		std::getline(is,m.imei,','); // read imei string until comma is found
 		is >> m.momsn >> delim; // MOMSN
-		is >> tmp; // MTMSN
+		is >> m.mtmsn >> delim; // MTMSN
 		is >> m.PID >> delim; // Message ID (PID)
 		is >> m.yy >> delim >> m.mm >> delim >> m.dd >> delim; // Year,Month,Day
 		is >> m.HH >> delim >> m.MM >> delim >> m.SS >> delim;  // Hour,Minute,Second

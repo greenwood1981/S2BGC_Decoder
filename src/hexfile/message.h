@@ -10,7 +10,8 @@ public:
   std::string type;
   uint16_t PID;
   boost::posix_time::ptime time;
-  uint16_t momsn;
+  uint16_t momsn,mtmsn;
+  std::string imei;
   uint16_t yy,mm,dd,HH,MM,SS,SN,size;
   int16_t cycle;
   double lat,lon;
