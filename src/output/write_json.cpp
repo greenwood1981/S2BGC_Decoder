@@ -1,4 +1,5 @@
 #include <iostream> // BG DEBUG
+#include <algorithm>
 #include <fstream>
 #include <regex>
 #include <sstream>
@@ -937,8 +938,10 @@ void hexfile::write_JSON() {
         first2 = false;
 
 		// Handle NO3 Spectrum columns uniquely
-		if (bist_no3.eng_received) {
-			spectra_count = bist_no3.J_fit2 - bist_no3.J_fit1 + 1;
+		if (bist_no3.eng_received) { // range checking added JG
+			if (bist_no3.J_fit1 == std::clamp(spectra_count,38,44) && bist_no3.J_fit2 == std::clamp(spectra_count,38,44)) {
+				spectra_count = bist_no3.J_fit2 - bist_no3.J_fit1 + 1;
+			}
 		}
 
 		if (var == "S01") {
