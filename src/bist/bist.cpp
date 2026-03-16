@@ -217,7 +217,7 @@ void no3_bist::parse_spectral(std::vector<uint8_t> d) {
 	spectral_count = (d[6]<<8) + d[7];
 
 	// Contains NO3 spectral values S[k]
-	for(int i = 8; i < 8 + (spectral_count*2); i++) {
+	for(int i = 8; i < 8 + (spectral_count*2); i+=2) { // 2026/03/16 BG fix spectral count parsing; each spectral count is 2 bytes
 		svals.push_back( (d[i]<<8) + d[i+1] ); // 2-byte integer counts of each spectral bin
 	}
 };
