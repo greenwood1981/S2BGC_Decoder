@@ -47,7 +47,7 @@ profile_segment::profile_segment(vector<uint8_t> d, string n, double g, double o
 		index = (data[6] << 8) + data[7];
 		Unpack_BGC_2d(0);
 	}
-	// this sub-message uses BGC 2nd diff compresion w/ autogain capability
+	// this sub-message uses BGC 2nd diff compression w/ autogain capability
 	if (unpk == 10) {
 		index = (data[6] << 8) + data[7];
 		Unpack_BGC_2d(1);
@@ -125,6 +125,7 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 	int again, aoffset; // auto gain/offset
 
 	while (data[ptr] != 0x3b) {
+		std::vector<long int> tmp_counts=raw_counts; //JG addition to retain original raw_counts within tmp_counts
 		D1.clear();
 		D2.clear();
 		while ((int)nib.size() > 0) {
@@ -143,7 +144,7 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 			tmp = (data[ptr] << 8) + data[ptr+1];
 			std::cout << "Badbit flag: " << std::hex << std::setw(4) << std::setfill('0') << tmp << std::dec << std::endl;
 			ptr += 2;
-			for(int x = 0; x < 15; x++) {
+			for(int x = 0; x < 16; x++) { //JG changed 15 to 16...as it is possible to have full badbit 'FFFF'
 				badbit.push_back( (tmp & (1<<x)) > 0 );
 				if (tmp & (1<<x))
 					badbit_cnt++;
@@ -158,14 +159,15 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 		}
 
 		// Read first count
-		cnt = (data[ptr]<<8) + data[ptr+1];
-		buff.push_back(cnt);
-		n++;
-		ptr += 2;
-		//std::cout << "1st val push back: " << cnt << std::endl;
+		if ( D1_count + 1 - badbit_cnt > 0 ) { //add exclusion JG
+			cnt = (data[ptr]<<8) + data[ptr+1];
+			buff.push_back(cnt);
+			n++;
+			ptr += 2;
+		}
 
 		// Read the first difference scan (if sent)
-		if (D1_count) {
+		if ( D1_count + 1 - badbit_cnt > 1 ) { //add exclusion JG
 			tmp = (data[ptr]<<8) + data[ptr+1];
 			if (tmp >= 0x8000)
 				tmp -= 0x10000;
@@ -174,7 +176,7 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 			n++;
 		}
 
-		if (D1_count > 1) {
+		if ( D1_count + 1 - badbit_cnt > 2) { // add badbit_cnt JG
 			// Read in nibbles (if sent)
 			int i = D2_size * (D1_count - 1 - badbit_cnt); // D1_count - 1 = # nibbles; bad measurements are not sent, so subtract these
 			while (i > 1) {
@@ -201,16 +203,17 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 			}
 
 			// Compute 1st differences
-			for (unsigned int n=0; n<D1_count-1; n++) { // there will be D1_count-1 2nd differences
+			for (int n=0; n<D1_count-1-badbit_cnt; n++) { // there will be D1_count-1-badbit_cnt 2nd differences (JG change)
 				D1.push_back(D1[n]+D2[n]);
 			}
 		}
 
 	   	// compute values
-		for (unsigned int z=0; z < D1_count; z++) {
+		for (int z=0; z < D1_count - badbit_cnt ; z++) {
 			cnt = buff.back()+D1[z];
 			buff.push_back(cnt);
-    	}
+		}
+
 		if (autogain) {
 			//int scalar_offset = 20000;//config["packets"][type]["auto_offset"]; // for auto-gain variables, offset value is multiplied by this constant
 			if (autogain_scale) {
@@ -242,18 +245,18 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 		buff.clear();
 
 		// insert fill values for flagged bad scans
-		int r = 0;
+		int r = tmp_counts.size(); //JG change point to end of the original raw_counts
 		if (badbit_flag) {
-			std::vector<long int> tmp;
 			for( int x = 0; x < D1_count+1; x++ ) {
-				if (badbit[x])
-					tmp.push_back(-999);
-				else
-					tmp.push_back( raw_counts[r++] );
+				if (badbit[x]) {
+					tmp_counts.push_back(-999);
+				} else {
+					tmp_counts.push_back( raw_counts[r++] );
+				}
 			}
-			raw_counts = tmp;
+			raw_counts = tmp_counts;
 		}
-    }
+	} // end of while loop "3b"
 
 	if (raw_counts.size()==0) {
 		std::cout << " * warning, empty packet 0x3b found at byte 10" << std::endl;
