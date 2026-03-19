@@ -209,7 +209,7 @@ void profile_segment::Unpack_BGC_2d(bool autogain) {
 		}
 
 	   	// compute values
-		for (int z=0; z < D1_count - badbit_cnt ; z++) {
+		for (unsigned int z=0; z < std::max(0,D1_count - badbit_cnt); z++) {
 			cnt = buff.back()+D1[z];
 			buff.push_back(cnt);
 		}
