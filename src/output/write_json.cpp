@@ -953,7 +953,12 @@ void hexfile::write_JSON() {
 				first4 = false;
 				sname.str("");
 				sname << "S" << std::setw(2) << std::setfill('0') << s;
-				fout << std::fixed << std::setprecision(0) << prof[pname][sname.str()][i];
+				if ( !prof[pname][sname.str()].empty() ) {
+					fout << std::fixed << std::setprecision(0) << prof[pname][sname.str()][i];
+				}
+				else {
+					fout << std::fixed << std::setprecision(0) << decimal(-999,cwidth,cpres);
+				}
 			}
 			fout << "]";
 		}
