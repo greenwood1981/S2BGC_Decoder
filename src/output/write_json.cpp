@@ -157,6 +157,7 @@ void hexfile::write_JSON() {
 
   // Float specific config info
   string floatconfig = format("{:s}/{:d}/{:d}_config.json",std::string(config["directories"]["output"]),sn,sn);
+
   // Look for SN_config.json file in float subdirectory. If it doesn't exist, create one using default value [see config/default_config.json]
   if (!std::filesystem::exists(floatconfig)) {
     string configdefault = S2BGC_PATH + "/config/default_float_config.json";
@@ -167,7 +168,25 @@ void hexfile::write_JSON() {
   // Read float specific config file and write firmware version to json file
   std::ifstream f2(floatconfig);
   auto float_config = nlohmann::ordered_json::parse(f2); // use ordered_json to preserve order
-  fout << "  \"FIRMWARE_VERSION\": " << float_config["FIRMWARE_VERSION"] << "," << std::endl;
+
+  // assign sensor specific column names to ECO profiles
+  for (auto p : {"ECO_Discrete","ECO_Drift"}) {
+    for (auto ch : {"ch1","ch2","ch3"}) {
+      std::string colname = float_config["ECO"][ch];
+      config["prof"][p][colname] = config["prof"][p][ch];
+      prof[p][colname] = prof[p][ch];
+      prof[p].channel.erase(ch);
+    }
+  }
+  // assign sensor specific column names to OCR_Discrete profile
+  for ( auto ch : {"ch1","ch2","ch3","ch4"}) {
+    std::string colname = float_config["OCR"][ch];
+    config["prof"]["OCR_Discrete"][colname] = config["prof"]["OCR_Discrete"][ch];
+    prof["OCR_Discrete"][colname] = prof["OCR_Discrete"][ch];
+    prof["OCR_Discrete"].channel.erase(ch);
+  }
+
+  //fout << "  \"FIRMWARE_VERSION\": " << float_config["FIRMWARE_VERSION"] << "," << std::endl;
 
   fout << "  \"CYCLE_NUMBER\": " << cycle << "," << std::endl;
 

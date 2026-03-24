@@ -34,15 +34,15 @@
     },
     "ECO_Discrete": {
       "PRES": { "gain":25,"offset":10, "col_width":7, "col_precision":2},
-      "CHLA": { "gain":1, "offset":500, "col_width":3, "col_precision":0},
-      "BACKSCATTERING700": { "gain":1,"offset":500, "col_width":3, "col_precision":0},
-      "FLUORESCENCE_CDOM": { "gain":1,"offset":500, "col_width":3, "col_precision":0}
+      "ch1": { "gain":1, "offset":500, "col_width":3, "col_precision":0},
+      "ch2": { "gain":1,"offset":500, "col_width":3, "col_precision":0},
+      "ch3": { "gain":1,"offset":500, "col_width":3, "col_precision":0}
     },
     "ECO_Drift": {
       "PRES": { "gain":25,"offset":10, "col_width":7, "col_precision":2},
-      "CHLA": { "gain":1,"offset":500, "col_width":3, "col_precision":0},
-      "BACKSCATTERING700": { "gain":1,"offset":500, "col_width":3, "col_precision":0},
-      "FLUORESCENCE_CDOM": { "gain":1,"offset":500, "col_width":3, "col_precision":0}
+      "ch1": { "gain":1,"offset":500, "col_width":3, "col_precision":0},
+      "ch2": { "gain":1,"offset":500, "col_width":3, "col_precision":0},
+      "ch3": { "gain":1,"offset":500, "col_width":3, "col_precision":0}
     },
     "DO_Discrete": {
       "PRES": { "gain":25,"offset":10, "col_width":7, "col_precision":2, "long_name":"Sea water pressure, equals 0 at sea-level","units":"decibar"},
@@ -81,10 +81,10 @@
     },
     "OCR_Discrete": {
       "PRES": { "gain":25,"offset":10, "col_width":7, "col_precision":2},
-      "DOWN_IRRADIANCE380": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0, "comment": "gain=1/1024,offset=1966080*1024"},
-      "DOWN_IRRADIANCE412": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0},
-      "DOWN_IRRADIANCE490": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0},
-      "PAR": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0}
+      "ch1": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0, "comment": "gain=1/1024,offset=1966080*1024"},
+      "ch2": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0},
+      "ch3": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0},
+      "ch4": { "gain":0.0009765625,"offset":-2013265920, "col_width":10, "col_precision":0}
     },
     "NITRATE_Discrete": {
       "PRES": { "gain":25,"offset":10,"col_width":7,"col_precision":2},
@@ -192,13 +192,13 @@
     "210133": {"profile": "CTD_Drift","name":"TEMP"},
     "210233": {"profile": "CTD_Drift","name":"PSAL"},
     "220000": {"profile": "ECO_Discrete","name":"PRES"},
-    "220100": {"profile": "ECO_Discrete","name":"CHLA"},
-    "220200": {"profile": "ECO_Discrete","name":"BACKSCATTERING700"},
-    "220300": {"profile": "ECO_Discrete","name":"FLUORESCENCE_CDOM"},
+    "220100": {"profile": "ECO_Discrete","name":"ch1"},
+    "220200": {"profile": "ECO_Discrete","name":"ch2"},
+    "220300": {"profile": "ECO_Discrete","name":"ch3"},
     "220032": {"profile": "ECO_Drift","name":"PRES"},
-    "220132": {"profile": "ECO_Drift","name":"CHLA"},
-    "220232": {"profile": "ECO_Drift","name":"BACKSCATTERING700"},
-    "220332": {"profile": "ECO_Drift","name":"FLUORESCENCE_CDOM"},
+    "220132": {"profile": "ECO_Drift","name":"ch1"},
+    "220232": {"profile": "ECO_Drift","name":"ch2"},
+    "220332": {"profile": "ECO_Drift","name":"ch3"},
     "230000": {"profile": "DO_Discrete","name":"PRES"},
     "230100": {"profile": "DO_Discrete","name":"PHASE_DELAY_DOXY"},
     "230200": {"profile": "DO_Discrete","name":"TEMP_VOLTAGE_DOXY"},
@@ -225,10 +225,10 @@
     "240332": {"profile": "pH_Drift","name":"IK_PH","auto_offset":20000},
     "240432": {"profile": "pH_Drift","name":"IB_PH","auto_offset":20000},
     "250000": {"profile": "OCR_Discrete","name":"PRES"},
-    "250100": {"profile": "OCR_Discrete","name":"DOWN_IRRADIANCE380","auto_offset":10000},
-    "250200": {"profile": "OCR_Discrete","name":"DOWN_IRRADIANCE412","auto_offset":10000},
-    "250300": {"profile": "OCR_Discrete","name":"DOWN_IRRADIANCE490","auto_offset":10000},
-    "250400": {"profile": "OCR_Discrete","name":"PAR","auto_offset":10000},
+    "250100": {"profile": "OCR_Discrete","name":"ch1","auto_offset":10000},
+    "250200": {"profile": "OCR_Discrete","name":"ch2","auto_offset":10000},
+    "250300": {"profile": "OCR_Discrete","name":"ch3","auto_offset":10000},
+    "250400": {"profile": "OCR_Discrete","name":"ch4","auto_offset":10000},
     "310000": {"profile": "NITRATE_Discrete","name":"PRES"},
     "310100": {"profile": "NITRATE_Discrete","name":"Res"},
     "310200": {"profile": "NITRATE_Discrete","name":"darkM"},
