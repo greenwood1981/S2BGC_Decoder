@@ -943,13 +943,14 @@ void hexfile::write_JSON() {
       first1 = false;
       fout << "    { ";
       first2 = true;
+      bool firstSpec = false; // JG change; used to identify first column associated with Nitrate Spectrum
       for (auto & [var,vatts] : vdict.items()) {
         if ( !prof[pname][var].size() ) // skip empty columns
           continue;
         cwidth = vatts["col_width"];
         cpres  = vatts["col_precision"];
 
-		if ( pname == "NITRATE_Discrete" && std::regex_match(var,spectra) && var != "S01") {
+		if ( pname == "NITRATE_Discrete" && std::regex_match(var,spectra) && firstSpec != false) {
           continue; // Spectrum columns handled uniquely below
         }
         if (!first2)
@@ -963,7 +964,9 @@ void hexfile::write_JSON() {
 			}
 		}
 
-		if (var == "S01") {
+		//if (var == "S01") {
+        if ( std::regex_match(var,spectra) && firstSpec == false ) { // JG change
+			firstSpec = true;
 			fout << "\"Spectrum\": [" << std::setfill(' ');
 			first4 = true;
 			for ( int s = 1; s <= spectra_count; s++ ) {
