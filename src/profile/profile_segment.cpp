@@ -284,6 +284,9 @@ void profile_segment::Unpack_2p0() {
     //npts = (data[ptr+1] << 8)+data[ptr]; ptr += 2;
 
     raw_counts.push_back((data[ptr] << 16)+(data[ptr+1] << 8)+data[ptr+2]); ptr += 3;
+    if (raw_counts[0] >= 0x800000) //2026/05/12 JG addition; the initial value is signed
+      raw_counts[0] -= 0x1000000;
+
     D.push_back((data[ptr] << 16)+(data[ptr+1] << 8)+data[ptr+2]); ptr += 3;
 
     if (D[0] >= 0x800000)
