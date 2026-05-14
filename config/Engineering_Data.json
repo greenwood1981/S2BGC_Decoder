@@ -29,7 +29,6 @@
   "SBEntry": { "type": "U16", "mask": "0xfff0", "description": "SBE attempts"},
   "SBEstrt": { "type": "U16", "mask": "0x000c", "description": "SBE start"},
   "SBEstop": { "type": "U16", "mask": "0x0003", "description": "SBE stop"},
-  "SBstat": { "type": "U16", "description": "SBE Status"},
   "DPavg0": { "type": "U24", "scale":"pres", "offset":"pres", "prec":2, "units": "dbar", "description": "Average pressure over 1st half of drift"},
   "DTavg0": { "type": "U24", "scale":"temp", "offset":"temp", "prec":3, "units": "degC", "description": "Average temperature over 1st half of drift"},
   "DSavg0": { "type": "U24", "scale":"psal", "offset":"psal", "prec":4, "units": "PSU", "description": "Average salinity over 1st half of drift"},
