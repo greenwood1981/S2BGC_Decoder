@@ -1,6 +1,7 @@
 {
   "nQueued": { "type": "U16", "description": "# of data blocks queued for this dive"},
-  "nTries":  { "type": "U16", "description": "# of tries to get the data block receive status"},
+  "SBDerr": { "type": "I8", "description": "ErrByte of the Iridium session: 0=no error, -5= Data-Carrier-Drop (lost connection)"},
+  "nTries":  { "type": "U8", "description": "# of tries to get the data block receive status"},
   "parXstat": { "type": "I16", "description": "parse_x_reply status in the last surface session"},
   "SBDIstat": { "type": "U16", "description": "ATSBD return status in last surface session"},
   "SBDsecs": { "type": "U16", "units":"s", "description": "time taken in sending last SBD message"},
@@ -25,6 +26,9 @@
   "diagS1": { "type": "U24", "scale":"psal", "offset":"psal", "prec":4, "units": "PSU", "description": "Shallowest salinity scan"},
   "nBad": { "type": "U16", "description": "# of bad SBE bins"},
   "SBnScan": { "type": "I16", "description": "# scans recorded by SBE"},
+  "SBEntry": { "type": "U16", "mask": "0xfff0", "description": "SBE attempts"},
+  "SBEstrt": { "type": "U16", "mask": "0x000c", "description": "SBE start"},
+  "SBEstop": { "type": "U16", "mask": "0x0003", "description": "SBE stop"},
   "SBstat": { "type": "U16", "description": "SBE Status"},
   "DPavg0": { "type": "U24", "scale":"pres", "offset":"pres", "prec":2, "units": "dbar", "description": "Average pressure over 1st half of drift"},
   "DTavg0": { "type": "U24", "scale":"temp", "offset":"temp", "prec":3, "units": "degC", "description": "Average temperature over 1st half of drift"},
