@@ -79,6 +79,7 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
     std::ifstream f(pfile);
     json params = json::parse(f);
 
+    int dval; // used to handle Engineering variables with 'mask'
 	int n = 6;
 	double val;
 	int prec;
@@ -97,12 +98,46 @@ void Engineering_Data::parse_pfile(std::vector<uint8_t> d,std::string pfile) {
 		unit.str("");
 		unit << "\"";
 		if (patts["type"] == "U8") {
-			val = d[n];
-			n++;
+			if (patts.contains("mask")) {
+				dval=d[n];
+				std::string hexbits = patts["mask"];
+				int bits = std::stoi(hexbits,nullptr,16);
+				bool lsbbits = (bits & 1);
+				if ( lsbbits ) {
+					val = ( ( dval & bits ) );
+					n++;
+				} else {
+					int bitshift = log2( bits & (-1)*bits );
+					val = ( ( dval & bits ) >> bitshift );
+				}
+			} else {
+				val = d[n];
+				n++;
+			}
 		}
 		else if (patts["type"] == "U16") {
-			val = (d[n]<<8) + d[n+1];
-			n+=2;
+			if (patts.contains("mask")) {
+				dval=(d[n]<<8) + d[n+1];
+				std::string hexbits = patts["mask"];
+				int bits = std::stoi(hexbits,nullptr,16);
+				bool lsbbits = (bits & 1);
+				if ( lsbbits ) {
+					val = ( ( dval & bits ) );
+					n+=2;
+				} else {
+					int bitshift = log2( bits & (-1)*bits );
+					val = ( ( dval & bits ) >> bitshift );
+				}
+			} else {
+				val = (d[n]<<8) + d[n+1];
+				n+=2;
+			}
+		}
+		else if (patts["type"] == "I8") { //JG add: 07 May 2026
+			val = d[n];
+			if (val > 127)
+				val = val - 128;
+			n++;
 		}
 		else if (patts["type"] == "I16") {
 			val = (d[n]<<8) + d[n+1];
